@@ -1,0 +1,33 @@
+# ═══════════════════════════════════════════════════════════
+# BTC Quant Trading System — Trading Configuration
+# ═══════════════════════════════════════════════════════════
+
+system:
+  name: "BTC Quant Trading System"
+  version: "1.0.0"
+  author: "Quant Team"
+  log_level: "INFO"
+
+data:
+  source_path: "../btcusd_1-min_data.csv"
+  symbol: "BTC/USDT"
+  base_timeframe: "1min"
+  timestamp_format: "unix_epoch"
+  timezone: "UTC"
+
+timeframes:
+  primary: "4h"
+  secondary: ["1h", "1d"]
+  available: ["1min", "5min", "15min", "30min", "1h", "4h", "1d", "1w"]
+
+trading:
+  initial_capital: 100000
+  base_currency: "USDT"
+  mode: "backtest"  # backtest | paper | live
+
+signal:
+  min_score_long: 7
+  min_score_short: -7
+  min_confidence: 0.60
+  max_signals_per_day: 5
+  cooldown_minutes: 240  # 4 hours between signals

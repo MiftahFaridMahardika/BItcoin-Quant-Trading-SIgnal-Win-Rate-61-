@@ -1,0 +1,43 @@
+# ═══════════════════════════════════════════════════════════
+# BTC Quant Trading System — Risk Management Configuration
+# ═══════════════════════════════════════════════════════════
+
+position_sizing:
+  method: "kelly_half"           # fixed | kelly | kelly_half
+  max_risk_per_trade: 0.02       # 2% max risk per trade
+  kelly_fraction: 0.5            # Half-Kelly for safety
+  min_position_size: 0.001       # Minimum BTC position
+
+risk_limits:
+  max_position_pct: 0.30         # 30% of portfolio max
+  max_daily_loss: 0.05           # 5% daily loss limit
+  max_total_drawdown: 0.15       # 15% max drawdown
+  max_concurrent_trades: 3       # Max open positions
+  max_correlation: 0.80          # Max correlation between positions
+
+stop_loss:
+  method: "atr"                  # fixed | atr | volatility
+  atr_period: 14
+  sl_multiplier: 1.5
+  hard_stop_pct: 0.05            # 5% hard stop fallback
+
+take_profit:
+  tp1_multiplier: 2.0            # 1st target: Exit 33%
+  tp2_multiplier: 3.5            # 2nd target: Exit 33%
+  tp3_multiplier: 5.0            # 3rd target: Exit 34%
+  trailing_stop_activation: 1.5  # Activate at 1.5x risk
+  trailing_stop_distance: 0.5    # Trail at 0.5x risk
+
+drawdown_scaling:
+  enabled: true
+  levels:
+    - {threshold: 0.05, multiplier: 1.00}   # 0-5% DD: full size
+    - {threshold: 0.10, multiplier: 0.75}   # 5-10% DD: 75%
+    - {threshold: 0.15, multiplier: 0.50}   # 10-15% DD: 50%
+    - {threshold: 0.20, multiplier: 0.25}   # 15-20% DD: 25%
+    - {threshold: 0.25, multiplier: 0.00}   # >25% DD: stop trading
+
+circuit_breaker:
+  enabled: true
+  max_consecutive_losses: 5
+  cooldown_hours: 24

@@ -1,0 +1,87 @@
+hmm_config:
+  n_states: 4
+  n_iter: 200
+  n_init: 5
+  train_start: '2015-01-01'
+  train_end: '2022-12-31'
+  state_labels:
+    2: HIGH_VOL
+    3: BULL
+    1: BEAR
+    0: SIDEWAYS
+regime_distribution_full:
+  BULL: 26367
+  BEAR: 669
+  SIDEWAYS: 2060
+  HIGH_VOL: 1950
+regime_stats:
+  BULL:
+    n_bars: 17492.0
+    pct_time: 99.8
+    mean_ann_ret_pct: 49.9
+    ann_vol_pct: 75.1
+    sharpe: 0.665
+    avg_run_length: 5830.7
+  BEAR:
+    n_bars: 14.0
+    pct_time: 0.1
+    mean_ann_ret_pct: -545.82
+    ann_vol_pct: 21.65
+    sharpe: -25.21
+    avg_run_length: 14.0
+  SIDEWAYS:
+    n_bars: 4.0
+    pct_time: 0.0
+    mean_ann_ret_pct: -1908.21
+    ann_vol_pct: 58.39
+    sharpe: -32.682
+    avg_run_length: 2.0
+  HIGH_VOL:
+    n_bars: 22.0
+    pct_time: 0.1
+    mean_ann_ret_pct: 254.98
+    ann_vol_pct: 25.56
+    sharpe: 9.977
+    avg_run_length: 11.0
+baseline:
+  label: Baseline
+  initial_capital: 100000.0
+  final_equity: 115738.55
+  total_pnl: 15738.55
+  total_return_pct: 15.74
+  cagr_pct: 7.59
+  total_trades: 157
+  winning_trades: 43
+  losing_trades: 114
+  win_rate_pct: 27.39
+  avg_win_usd: 3290.45
+  avg_loss_usd: 1074.65
+  avg_win_r: 3.235
+  avg_loss_r: 1.039
+  expectancy_r: 0.132
+  profit_factor: 1.155
+  sharpe_ratio: 0.525
+  sortino_ratio: 0.38
+  calmar_ratio: 0.502
+  max_drawdown_pct: 15.1
+regime_aware:
+  label: Regime-Aware
+  initial_capital: 100000.0
+  final_equity: 129540.96
+  total_pnl: 29540.96
+  total_return_pct: 29.54
+  cagr_pct: 13.83
+  total_trades: 116
+  winning_trades: 35
+  losing_trades: 81
+  win_rate_pct: 30.17
+  avg_win_usd: 3645.21
+  avg_loss_usd: 1176.44
+  avg_win_r: 3.293
+  avg_loss_r: 1.044
+  expectancy_r: 0.264
+  profit_factor: 1.339
+  sharpe_ratio: 0.944
+  sortino_ratio: 0.611
+  calmar_ratio: 0.999
+  max_drawdown_pct: 13.84

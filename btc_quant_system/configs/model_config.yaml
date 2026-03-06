@@ -1,0 +1,53 @@
+# ═══════════════════════════════════════════════════════════
+# BTC Quant Trading System — ML Model Configuration
+# ═══════════════════════════════════════════════════════════
+
+feature_engineering:
+  lookback_periods: [7, 14, 21, 50, 100, 200]
+  price_features: true
+  volume_features: true
+  volatility_features: true
+  momentum_features: true
+  pattern_features: true
+
+models:
+  primary: "gradient_boosting"
+
+  gradient_boosting:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 5
+    early_stopping_rounds: 50
+
+  random_forest:
+    n_estimators: 300
+    max_depth: 10
+    min_samples_split: 20
+    min_samples_leaf: 10
+    class_weight: "balanced"
+
+  lstm:
+    sequence_length: 60
+    hidden_size: 128
+    num_layers: 2
+    dropout: 0.3
+    learning_rate: 0.001
+    batch_size: 64
+    epochs: 100
+    patience: 15
+
+training:
+  validation_split: 0.2
+  walk_forward:
+    enabled: true
+    train_window: 252         # ~1 year of 4H candles
+    test_window: 63           # ~3 months of 4H candles
+    step_size: 63             # Retrain every 3 months
+
+  target:
+    type: "classification"    # classification | regression
+    horizon: 6                # Predict 6 candles ahead (24h for 4H)
+    threshold: 0.01           # 1% move = signal

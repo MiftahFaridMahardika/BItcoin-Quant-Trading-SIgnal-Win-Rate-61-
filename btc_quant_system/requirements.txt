@@ -1,0 +1,33 @@
+# ═══════════════════════════════════════════════════════════
+# BTC Quant Trading System — Dependencies
+# ═══════════════════════════════════════════════════════════
+
+# Core data
+pandas>=2.0.0
+numpy>=1.24.0
+pyarrow>=12.0.0            # Parquet read/write
+
+# Config
+pyyaml>=6.0
+
+# Technical Analysis
+ta-lib>=0.4.28             # C-based TA library (optional, needs system lib)
+pandas-ta>=0.3.14b1        # Pure Python alternative
+
+# Machine Learning
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+lightgbm>=4.0.0
+optuna>=3.0.0              # Hyperparameter optimisation
+
+# Deep Learning (optional)
+# torch>=2.0.0
+# tensorflow>=2.13.0
+
+# Visualization
+matplotlib>=3.7.0
+plotly>=5.15.0
+
+# Utilities
+tqdm>=4.65.0               # Progress bars
+python-dateutil>=2.8.0

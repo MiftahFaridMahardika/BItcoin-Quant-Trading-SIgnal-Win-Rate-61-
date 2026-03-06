@@ -1,0 +1,218 @@
+config:
+  train_months: 24
+  test_months: 12
+  step_months: 12
+  n_windows: 6
+  first_test_start: '2019-01-01'
+windows:
+- window_idx: 1
+  test_period: 2019-01 → 2019-12
+  total_return_pct: 64.78
+  cagr_pct: 52.25
+  sharpe_ratio: 0.0725
+  sortino_ratio: 0.0659
+  max_drawdown_pct: 9.96
+  win_rate_pct: 40.0
+  profit_factor: 1.5402
+  expectancy_r: 0.0227
+  total_trades: 115
+  elapsed_s: 0.3
+  ok: true
+  error: null
+- window_idx: 2
+  test_period: 2020-01 → 2020-12
+  total_return_pct: 6.52
+  cagr_pct: 5.45
+  sharpe_ratio: -0.6104
+  sortino_ratio: -0.3142
+  max_drawdown_pct: 15.04
+  win_rate_pct: 34.72
+  profit_factor: 1.1013
+  expectancy_r: -0.2104
+  total_trades: 72
+  elapsed_s: 0.3
+  ok: true
+  error: null
+- window_idx: 3
+  test_period: 2021-01 → 2021-12
+  total_return_pct: 5.01
+  cagr_pct: 4.2
+  sharpe_ratio: -0.7024
+  sortino_ratio: -0.3959
+  max_drawdown_pct: 15.86
+  win_rate_pct: 33.93
+  profit_factor: 1.088
+  expectancy_r: -0.1743
+  total_trades: 56
+  elapsed_s: 0.3
+  ok: true
+  error: null
+- window_idx: 4
+  test_period: 2022-01 → 2022-12
+  total_return_pct: -15.77
+  cagr_pct: -13.45
+  sharpe_ratio: -1.9655
+  sortino_ratio: -0.6819
+  max_drawdown_pct: 15.77
+  win_rate_pct: 24.24
+  profit_factor: 0.4848
+  expectancy_r: -0.4567
+  total_trades: 33
+  elapsed_s: 0.2
+  ok: true
+  error: null
+- window_idx: 5
+  test_period: 2023-01 → 2023-12
+  total_return_pct: -7.13
+  cagr_pct: -6.04
+  sharpe_ratio: -0.886
+  sortino_ratio: -0.5124
+  max_drawdown_pct: 15.26
+  win_rate_pct: 30.19
+  profit_factor: 0.8804
+  expectancy_r: 0.4167
+  total_trades: 53
+  elapsed_s: 0.3
+  ok: true
+  error: null
+- window_idx: 6
+  test_period: 2024-01 → 2024-12
+  total_return_pct: -5.62
+  cagr_pct: -4.74
+  sharpe_ratio: -1.6089
+  sortino_ratio: -0.5889
+  max_drawdown_pct: 15.07
+  win_rate_pct: 18.75
+  profit_factor: 0.7155
+  expectancy_r: -0.499
+  total_trades: 16
+  elapsed_s: 0.2
+  ok: true
+  error: null
+aggregated:
+  total_return_pct:
+    mean: 7.9651156572915385
+    std: 26.502945789601995
+    min: -15.767539010436826
+    max: 64.77996359697755
+  cagr_pct:
+    mean: 6.2780136346328925
+    std: 21.525693383515215
+    min: -13.446567848705914
+    max: 52.245528519158604
+  sharpe_ratio:
+    mean: -0.9501294955364181
+    std: 0.6697741497295973
+    min: -1.9655323751807923
+    max: 0.07247980025300564
+  sortino_ratio:
+    mean: -0.4045618082526272
+    std: 0.2422350256324701
+    min: -0.6818567384058943
+    max: 0.06589347624330122
+  calmar_ratio:
+    mean: 0.7185991875901019
+    std: 2.0665843582857635
+    min: -0.8528006710372102
+    max: 5.247772052856756
+  max_drawdown_pct:
+    mean: 14.49351700333498
+    std: 2.054059029954779
+    min: 9.955754173948437
+    max: 15.863465560269297
+  win_rate_pct:
+    mean: 30.305316189750155
+    std: 7.034694103666015
+    min: 18.75
+    max: 40.0
+  profit_factor:
+    mean: 0.9683496378168677
+    std: 0.3327819646637348
+    min: 0.48480628634307554
+    max: 1.540171582612923
+  expectancy_r:
+    mean: -0.15015839571909684
+    std: 0.3085261194283158
+    min: -0.4990400169816593
+    max: 0.41673382124401026
+  total_trades:
+    mean: 57.5
+    std: 31.255666152982034
+    min: 16.0
+    max: 115.0
+  max_consecutive_losses:
+    mean: 7.5
+    std: 1.9790570145063195
+    min: 5.0
+    max: 10.0
+  buy_hold_return_pct:
+    mean: 111.47129989848384
+    std: 108.9140579782952
+    min: -64.23783587744238
+    max: 300.2659199897369
+stability:
+  cagr_pct:
+    mean: 6.2780136346328925
+    std: 21.525693383515215
+    cv: 3.4287426941489803
+    consistency: 0.0
+    weight: 0.25
+  sharpe_ratio:
+    mean: -0.9501294955364181
+    std: 0.6697741497295973
+    cv: 0.7049293310818231
+    consistency: 0.2950706689181769
+    weight: 0.25
+  win_rate_pct:
+    mean: 30.305316189750155
+    std: 7.034694103666015
+    cv: 0.23212739506229885
+    consistency: 0.7678726049377012
+    weight: 0.2
+  max_drawdown_pct:
+    mean: 14.49351700333498
+    std: 2.054059029954779
+    cv: 0.1417226080793321
+    consistency: 0.8582773919206679
+    weight: 0.15
+  profit_factor:
+    mean: 0.9683496378168677
+    std: 0.3327819646637348
+    cv: 0.34365889309773234
+    consistency: 0.6563411069022677
+    weight: 0.15
+  overall_consistency_score: 0.4545349630405248
+  verdict: MARGINAL — high variance, consider re-optimisation
+  signal_distribution:
+    STRONG_LONG:
+      mean_pct: 13.676715054757327
+      std_pct: 4.225865379683273
+      cv: 0.30898248320332905
+    STRONG_SHORT:
+      mean_pct: 9.032217298350751
+      std_pct: 3.671776894222395
+      cv: 0.40651999093211005
+    LONG:
+      mean_pct: 21.480319078011743
+      std_pct: 3.606460923462069
+      cv: 0.16789605919559225
+    SKIP:
+      mean_pct: 35.76472435429454
+      std_pct: 1.9614142602638704
+      cv: 0.05484214671511507
+    SHORT:
+      mean_pct: 20.046024214585643
+      std_pct: 3.8113195349419606
+      cv: 0.19012845111544938
+  exit_distribution:
+    STOP_LOSS:
+      mean_pct: 88.9262029253826
+      std_pct: 3.2018376249109517
+    TP3:
+      mean_pct: 11.07379707461742
+      std_pct: 3.2018376249109486
+  profitable_windows: 3
+  total_windows: 6
+  profitability_rate: 0.5
+n_windows_run: 6
+n_windows_ok: 6

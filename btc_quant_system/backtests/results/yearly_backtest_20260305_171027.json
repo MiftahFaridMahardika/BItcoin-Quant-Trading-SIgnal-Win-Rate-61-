@@ -1,0 +1,34 @@
+{
+    "2022": {
+        "initial_capital": 10000,
+        "final_equity": 11301.937005465932,
+        "total_pnl": 1301.937005465932,
+        "total_return_pct": 13.019370054659321,
+        "total_trades": 97,
+        "win_rate_pct": 39.175257731958766
+    },
+    "2023": {
+        "initial_capital": 10000,
+        "final_equity": 9083.350589975242,
+        "total_pnl": -916.6494100247583,
+        "total_return_pct": -9.166494100247583,
+        "total_trades": 30,
+        "win_rate_pct": 26.666666666666668
+    },
+    "2024": {
+        "initial_capital": 10000,
+        "final_equity": 9497.741089318777,
+        "total_pnl": -502.2589106812229,
+        "total_return_pct": -5.022589106812229,
+        "total_trades": 28,
+        "win_rate_pct": 28.57142857142857
+    },
+    "2025": {
+        "initial_capital": 10000,
+        "final_equity": 9197.145620922187,
+        "total_pnl": -802.8543790778131,
+        "total_return_pct": -8.02854379077813,
+        "total_trades": 59,
+        "win_rate_pct": 30.508474576271187
+    }
+}

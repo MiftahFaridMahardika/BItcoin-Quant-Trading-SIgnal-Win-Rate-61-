@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \":*)",
+      "Bash(ln -sf \"/Users/miftahfaridm/Documents/Claude- Teknikal Sinyal/btcusd_1-min_data.csv\" \"/Users/miftahfaridm/Documents/Claude- Teknikal Sinyal/btc_quant_system/data/raw/btcusd_1-min_data.csv\")",
+      "Bash(pip3 install pandas pyarrow pyyaml --quiet)",
+      "Bash(python3 main.py --timeframe 4h --no-cache)",
+      "Bash(python3 test_features.py)",
+      "Bash(python3 test_signals.py)",
+      "Bash(python3 -c \"import sklearn; print\\(''sklearn'', sklearn.__version__\\)\")",
+      "Bash(python3 -c \"import xgboost; print\\(''xgboost'', xgboost.__version__\\)\")",
+      "Bash(python3 -c \"import lightgbm; print\\(''lightgbm'', lightgbm.__version__\\)\")",
+      "Bash(python3 -c \"import joblib; print\\(''joblib OK''\\)\")",
+      "Bash(pip3 install xgboost lightgbm --quiet)",
+      "Bash(python3 -c \"import xgboost; print\\(''xgboost'', xgboost.__version__\\); import lightgbm; print\\(''lightgbm'', lightgbm.__version__\\); import joblib; print\\(''joblib OK''\\)\")",
+      "Bash(python3 test_ml.py)",
+      "Bash(python test_ml.py)",
+      "Bash(python test_risk_engine.py)",
+      "Bash(python3 test_risk_engine.py)",
+      "Bash(python test_quality_signals.py)",
+      "Bash(\"/Users/miftahfaridm/Documents/Claude- Teknikal Sinyal/.venv/bin/pip\" install joblib scikit-learn xgboost lightgbm)",
+      "Bash(\"/Users/miftahfaridm/Documents/Claude- Teknikal Sinyal/.venv/bin/python\" test_quality_signals.py)",
+      "Bash(python run_leveraged_backtest.py)"
+    ]
+  }
+}

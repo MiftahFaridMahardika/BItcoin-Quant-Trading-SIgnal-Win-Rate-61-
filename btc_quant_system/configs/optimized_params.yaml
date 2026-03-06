@@ -1,0 +1,74 @@
+tuning_metadata:
+  date: 2026-03-05 16:21
+  n_trials: 5
+  n_cv_splits: 5
+  feature_count: 32
+  train_samples: 17944
+xgboost:
+  best_cv_f1: 0.464474
+  n_complete: 5
+  n_pruned: 0
+  elapsed_s: 100.5
+  params:
+    n_estimators: 510
+    max_depth: 9
+    learning_rate: 0.019721610970574007
+    subsample: 0.8056937753654446
+    colsample_bytree: 0.836965827544817
+    min_child_weight: 1
+    reg_alpha: 0.0029369981104377003
+    reg_lambda: 3.425445902633376e-07
+  retrain_val_f1: 0.408628
+  retrain_val_acc: 0.430137
+  retrain_test_f1: 0.496551
+  retrain_test_acc: 0.551247
+lightgbm:
+  best_cv_f1: 0.46552
+  n_complete: 5
+  n_pruned: 0
+  elapsed_s: 177.4
+  params:
+    n_estimators: 563
+    max_depth: 8
+    learning_rate: 0.011711509955524094
+    num_leaves: 99
+    min_child_samples: 12
+    subsample: 0.6260206371941118
+    colsample_bytree: 0.9795542149013333
+    reg_alpha: 4.905556676028766
+    reg_lambda: 0.1886149587855396
+  retrain_val_f1: 0.403793
+  retrain_val_acc: 0.432877
+  retrain_test_f1: 0.484462
+  retrain_test_acc: 0.56177
+random_forest:
+  best_cv_f1: 0.48404
+  n_complete: 5
+  n_pruned: 0
+  elapsed_s: 78.0
+  params:
+    max_depth: 15
+    n_estimators: 114
+    min_samples_split: 20
+    min_samples_leaf: 9
+    max_features: sqrt
+  retrain_val_f1: 0.402685
+  retrain_val_acc: 0.446347
+  retrain_test_f1: 0.4753
+  retrain_test_acc: 0.585267
+mlp:
+  best_cv_f1: 0.455987
+  n_complete: 5
+  n_pruned: 0
+  elapsed_s: 318.2
+  params:
+    n_layers: 1
+    units_l0: 282
+    activation: relu
+    alpha: 0.0755681014127443
+    learning_rate_init: 0.0035503048581283078
+    batch_size: 32
+  retrain_val_f1: 0.384894
+  retrain_val_acc: 0.43653
+  retrain_test_f1: 0.459808
+  retrain_test_acc: 0.562635
