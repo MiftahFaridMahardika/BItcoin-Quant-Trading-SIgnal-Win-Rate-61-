@@ -1,1203 +1,439 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BTC Quant Trading System — Project Report v2</title>
-<style>
-  :root {
-    --bg:       #0d1117;
-    --surface:  #161b22;
-    --surface2: #1c2128;
-    --border:   #30363d;
-    --text:     #e6edf3;
-    --muted:    #8b949e;
-    --green:    #3fb950;
-    --red:      #f85149;
-    --yellow:   #d29922;
-    --blue:     #58a6ff;
-    --cyan:     #39d353;
-    --purple:   #bc8cff;
-    --orange:   #ffa657;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    line-height: 1.7;
-  }
-  .page { max-width: 1120px; margin: 0 auto; padding: 40px 24px; }
+# BTC Quant Trading System — Project Report v2
 
-  /* ── Cover ────────────────────────────────────── */
-  .cover {
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a2332 100%);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 60px 52px;
-    margin-bottom: 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cover::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(88,166,255,.10) 0%, transparent 65%);
-  }
-  .cover-badge {
-    display: inline-block;
-    background: rgba(88,166,255,.12);
-    border: 1px solid rgba(88,166,255,.3);
-    color: var(--blue);
-    font-size: 11px; font-weight: 700;
-    letter-spacing: .14em; text-transform: uppercase;
-    padding: 4px 16px; border-radius: 20px; margin-bottom: 22px;
-  }
-  .cover-v2 {
-    display: inline-block;
-    background: rgba(63,185,80,.12);
-    border: 1px solid rgba(63,185,80,.3);
-    color: var(--green);
-    font-size: 11px; font-weight: 700;
-    letter-spacing: .12em; text-transform: uppercase;
-    padding: 4px 14px; border-radius: 20px;
-    margin-left: 8px;
-  }
-  .cover h1 {
-    font-size: 34px; font-weight: 800; letter-spacing: -.5px;
-    margin-bottom: 8px;
-    background: linear-gradient(135deg, #e6edf3, #58a6ff);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .cover .subtitle { color: var(--muted); font-size: 15px; margin-bottom: 30px; }
-  .cover-meta { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; }
-  .cover-meta span { color: var(--muted); font-size: 13px; }
-  .cover-meta strong { color: var(--text); }
+**Quant Research Report | Version 2.0**
 
-  /* ── Section ──────────────────────────────────── */
-  .section { margin-bottom: 44px; }
-  .section-title {
-    font-size: 20px; font-weight: 700;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 10px; margin-bottom: 22px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-title .num {
-    background: var(--blue); color: #000;
-    font-size: 11px; font-weight: 700;
-    width: 24px; height: 24px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .section-title .num-green { background: var(--green); }
-  .section-title .num-orange { background: var(--orange); }
-  .section-title .num-purple { background: var(--purple); }
+Institutional-Grade Algorithmic Trading — Full Optimization Suite v2
+TrendFollowing · AdaptiveSLTP · PullbackEntry · DynamicKelly · HighSelectivity
 
-  /* ── Cards ────────────────────────────────────── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
-  }
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px; margin-bottom: 20px;
-  }
-  .card-grid-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px; margin-bottom: 20px;
-  }
-  .metric-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 16px 20px;
-  }
-  .metric-card .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 7px; }
-  .metric-card .value { font-size: 26px; font-weight: 800; line-height: 1; }
-  .metric-card .sub   { color: var(--muted); font-size: 12px; margin-top: 5px; }
+- **Data:** 2017–2024
+- **Timeframe:** 4-Hour Bars
+- **Universe:** BTC/USDT
+- **Backtest:** 2019–2024 (6 Years)
+- **Leverage Sim:** 1x & 10x
+- **Generated:** March 2026
 
-  /* ── Colors ───────────────────────────────────── */
-  .green  { color: var(--green);  }
-  .red    { color: var(--red);    }
-  .yellow { color: var(--yellow); }
-  .blue   { color: var(--blue);   }
-  .purple { color: var(--purple); }
-  .orange { color: var(--orange); }
-  .muted  { color: var(--muted);  }
+---
 
-  /* ── Tags ─────────────────────────────────────── */
-  .tag { display: inline-block; padding: 2px 9px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: .04em; }
-  .tag-green  { background: rgba(63,185,80,.15);  color: var(--green);  border: 1px solid rgba(63,185,80,.3);  }
-  .tag-red    { background: rgba(248,81,73,.15);  color: var(--red);    border: 1px solid rgba(248,81,73,.3);  }
-  .tag-yellow { background: rgba(210,153,34,.15); color: var(--yellow); border: 1px solid rgba(210,153,34,.3); }
-  .tag-blue   { background: rgba(88,166,255,.12); color: var(--blue);   border: 1px solid rgba(88,166,255,.3); }
-  .tag-purple { background: rgba(188,140,255,.12);color: var(--purple); border: 1px solid rgba(188,140,255,.3);}
-  .tag-orange { background: rgba(255,166,87,.12); color: var(--orange); border: 1px solid rgba(255,166,87,.3); }
-  .tag-v2     { background: rgba(63,185,80,.15);  color: var(--green);  border: 1px solid rgba(63,185,80,.3);  font-size: 10px; }
+## 1. Executive Summary — v2 Optimization
 
-  /* ── Table ────────────────────────────────────── */
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th {
-    background: rgba(88,166,255,.08); color: var(--blue);
-    font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
-    font-size: 11px; padding: 10px 14px; text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-  td { padding: 9px 14px; border-bottom: 1px solid rgba(48,54,61,.6); vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(88,166,255,.025); }
+Version 2 introduces five optimization layers on top of the v1 system, fully applied to a 6-year backtest (2019–2024). Most significant results: **win rate increased from 30.2% to 61.3%**, SL exit rate dropped from 89% to 22.5%, and profit factor reached 1.87. In a 10× leverage simulation with $1,000 capital, the system generated $97,743 over 6 years (97.74×).
 
-  /* ── Flowchart ────────────────────────────────── */
-  .flowchart {
-    background: #080c12;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 28px 32px;
-    font-family: 'Cascadia Code','Fira Code','Consolas',monospace;
-    font-size: 12.5px; overflow-x: auto;
-    white-space: pre; line-height: 1.55; color: var(--text);
-  }
+### Key Metrics
 
-  /* ── Layout helpers ───────────────────────────── */
-  .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  @media (max-width: 800px) { .two-col, .three-col, .card-grid-4 { grid-template-columns: 1fr; } }
+| Metric | Value | vs Baseline |
+|--------|-------|-------------|
+| Total Return (6 Yr, $100k/yr) | +109.4% | vs Baseline +29.5% ↑ +80pp |
+| Win Rate | 61.3% | vs Baseline 30.2% ↑ +31pp |
+| SL Exit Rate | 22.5% | vs Baseline 89% ↓ −66.5pp |
+| Profit Factor | 1.87 | Baseline: N/A (new metric) |
+| Max Drawdown | 39.5% | vs Baseline 13.8% ↑ (2023 anomaly) |
+| Total Trades | 142 | 6 years, 2019–2024 |
+| Leveraged Return (10×) | +9,674% | $1,000 → $97,743 (6 yr) |
+| Liquidations (10×) | 0 | ATR SL < 10% liquidation threshold |
 
-  /* ── Highlight boxes ──────────────────────────── */
-  .highlight-box {
-    border-left: 3px solid var(--blue);
-    background: rgba(88,166,255,.05);
-    padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 14px;
-  }
-  .warn-box {
-    border-left: 3px solid var(--yellow);
-    background: rgba(210,153,34,.06);
-    padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 14px;
-  }
-  .success-box {
-    border-left: 3px solid var(--green);
-    background: rgba(63,185,80,.06);
-    padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 14px;
-  }
-  .danger-box {
-    border-left: 3px solid var(--red);
-    background: rgba(248,81,73,.05);
-    padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 14px;
-  }
-  .purple-box {
-    border-left: 3px solid var(--purple);
-    background: rgba(188,140,255,.05);
-    padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 14px;
-  }
+### Key Achievement v2
 
-  /* ── Progress bar ─────────────────────────────── */
-  .progress { background: rgba(48,54,61,.7); border-radius: 4px; height: 7px; overflow: hidden; margin-top: 8px; }
-  .progress-fill { height: 100%; border-radius: 4px; }
+TrendAwareSignalEngine + HighSelectivity(70%) successfully raised win rate dramatically (+31pp), proving that signal quality filters and bias adjustment per market regime are key. SL exit rate dropped from 89% → 22.5% because tiered trailing stop and partial exit (40%/30%/30%) effectively protect profits.
 
-  /* ── Misc ─────────────────────────────────────── */
-  h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--blue); }
-  h4 { font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
-  p  { margin-bottom: 10px; color: #c9d1d9; }
-  ul { padding-left: 20px; margin-bottom: 10px; }
-  li { margin-bottom: 5px; color: #c9d1d9; }
-  code {
-    background: rgba(88,166,255,.08); border: 1px solid rgba(88,166,255,.15);
-    border-radius: 4px; padding: 1px 6px;
-    font-family: 'Cascadia Code',monospace; font-size: 12px; color: var(--blue);
-  }
-  .delta-pos { color: var(--green); font-weight: 700; }
-  .delta-neg { color: var(--red);   font-weight: 700; }
-  .yr-row-pos td { border-left: 3px solid rgba(63,185,80,.4); }
-  .yr-row-neg td { border-left: 3px solid rgba(248,81,73,.4); }
-  .yr-row-pos td:first-child { padding-left: 11px; }
-  .yr-row-neg td:first-child { padding-left: 11px; }
-  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
-  .comparison-good { color: var(--green); font-weight: 700; }
-  .comparison-bad  { color: var(--red);   font-weight: 700; }
-  .footer {
-    text-align: center; color: var(--muted); font-size: 12px;
-    border-top: 1px solid var(--border); padding-top: 28px; margin-top: 48px;
-  }
-  .target-row td:first-child { font-weight: 600; }
-  .check-pass { color: var(--green); font-size: 16px; }
-  .check-fail { color: var(--red);   font-size: 16px; }
-</style>
-</head>
-<body>
-<div class="page">
+### Areas for Improvement
 
-<!-- ════════════════════════════════════════════════════════ COVER -->
-<div class="cover">
-  <div>
-    <div class="cover-badge">Quant Research Report</div>
-    <span class="cover-v2">Version 2.0</span>
-  </div>
-  <h1 style="margin-top:16px">BTC Quant Trading System</h1>
-  <p class="subtitle">Institutional-Grade Algorithmic Trading — Full Optimization Suite v2<br>
-  TrendFollowing · AdaptiveSLTP · PullbackEntry · DynamicKelly · HighSelectivity</p>
-  <div class="cover-meta">
-    <span><strong>Data</strong> 2017–2024</span>
-    <span><strong>Timeframe</strong> 4-Hour Bars</span>
-    <span><strong>Universe</strong> BTC/USDT</span>
-    <span><strong>Backtest</strong> 2019–2024 (6 Years)</span>
-    <span><strong>Leverage Sim</strong> 1x &amp; 10x</span>
-    <span><strong>Generated</strong> March 2026</span>
-  </div>
-</div>
+Sharpe ratio remains negative (−0.36) because 2023 experienced −21.07% loss with 39.5% drawdown, significantly pulling down annual figures. Max drawdown 39.5% exceeds target 20%. Vs Buy & Hold BTC still negative (BTC rose +2,571% during the same period).
 
-<!-- ════════════════════════════════════════════════════════ 1. EXECUTIVE SUMMARY -->
-<div class="section">
-  <div class="section-title"><div class="num">1</div> Ringkasan Eksekutif — v2 Optimization</div>
+---
 
-  <p>Version 2 memperkenalkan lima lapisan optimisasi pada sistem v1, diterapkan secara sepenuhnya pada backtest 6 tahun (2019–2024). Hasil paling signifikan: <strong>win rate naik dari 30.2% menjadi 61.3%</strong>, SL exit rate turun dari 89% menjadi 22.5%, dan profit factor mencapai 1.87. Pada simulasi 10× leverage dengan modal $1,000, sistem menghasilkan $97,743 dalam 6 tahun (97.74×).</p>
+## 2. System Architecture v2 — Full Stack
 
-  <div class="card-grid">
-    <div class="metric-card">
-      <div class="label">Total Return (6 Yr, $100k/yr)</div>
-      <div class="value green">+109.4%</div>
-      <div class="sub">vs Baseline +29.5% ↑ +80pp</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Win Rate</div>
-      <div class="value green">61.3%</div>
-      <div class="sub">vs Baseline 30.2% ↑ +31pp</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">SL Exit Rate</div>
-      <div class="value green">22.5%</div>
-      <div class="sub">vs Baseline 89% ↓ −66.5pp</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Profit Factor</div>
-      <div class="value green">1.87</div>
-      <div class="sub">Baseline: N/A (new metric)</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Max Drawdown</div>
-      <div class="value red">39.5%</div>
-      <div class="sub">vs Baseline 13.8% ↑ (2023 anomaly)</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Total Trades</div>
-      <div class="value blue">142</div>
-      <div class="sub">6 years, 2019–2024</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Leveraged Return (10×)</div>
-      <div class="value purple">+9,674%</div>
-      <div class="sub">$1,000 → $97,743 (6 yr)</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Liquidations (10×)</div>
-      <div class="value green">0</div>
-      <div class="sub">ATR SL &lt; 10% liquidation threshold</div>
-    </div>
-  </div>
-
-  <div class="success-box">
-    <strong>Pencapaian Utama v2:</strong> TrendAwareSignalEngine + HighSelectivity(70%) berhasil menaikkan win rate secara dramatis (+31pp), membuktikan bahwa filter kualitas sinyal dan bias adjustment per regime market adalah kunci. SL exit rate turun dari 89% → 22.5% karena trailing stop tiered dan partial exit (40%/30%/30%) bekerja efektif melindungi profit.
-  </div>
-  <div class="warn-box">
-    <strong>Area Perbaikan:</strong> Sharpe ratio tetap negatif (−0.36) karena 2023 mengalami loss −21.07% dengan drawdown 39.5%, menarik angka tahunan secara signifikan. Max drawdown 39.5% melampaui target 20%. Vs Buy &amp; Hold BTC masih negatif (BTC naik +2,571% selama periode yang sama).
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════════════════════ 2. ARCHITECTURE v2 -->
-<div class="section">
-  <div class="section-title"><div class="num">2</div> Arsitektur Sistem v2 — Full Stack</div>
-
-  <div class="flowchart">
+```
 ╔═══════════════════════════════════════════════════════════════════════════════════════╗
-║              BTC QUANT TRADING SYSTEM v2 — ARSITEKTUR LENGKAP                        ║
+║              BTC QUANT TRADING SYSTEM v2 — COMPLETE ARCHITECTURE                      ║
 ╚═══════════════════════════════════════════════════════════════════════════════════════╝
 
-  ┌─────────────────────────────────────────────────────────────────────────────────┐
-  │  LAYER 0 — DATA PIPELINE (data_pipeline.py)                                     │
-  │  btcusd_1-min_data.csv → resample 1min→4H → btcusd_4h.parquet (cache)          │
-  │  17,532 candles (2017-01-01 → 2024-12-31) │ validated OHLCV │ UTC timezone       │
-  └─────────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      ▼
-  ┌─────────────────────────────────────────────────────────────────────────────────┐
-  │  LAYER 1 — FEATURE ENGINE (feature_engine.py)                                   │
-  │  50+ Technical Indicators across 5 layers                                       │
-  │  ├─ L1 Trend (12):     EMA 21/55/200, HMA, Supertrend, ADX-14                  │
-  │  ├─ L2 Momentum (20):  RSI-14, MACD+Hist, Z-Score(50), Stoch RSI               │
-  │  ├─ L3 Volatility (14): Bollinger %B, Keltner Channel, ATR-14, Vol Regime       │
-  │  ├─ L4 Volume (10):    OBV+slope, Volume Ratio MA, Volume Trend                 │
-  │  └─ L5 Price Action (10): Market Structure, Price Momentum (1/6/42 bar)         │
-  │                                         Output: btcusd_4h_features.parquet      │
-  └─────────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                      ┌───────────────┼───────────────────┐
-                      ▼               ▼                   ▼
-  ┌──────────────────────┐  ┌─────────────────────┐  ┌────────────────────────────┐
-  │  SIGNAL ENGINE v1    │  │  ML MODELS (Tuned)  │  │  MARKET BIAS DETECTOR      │
-  │  signal_engine.py    │  │  ml_models.py       │  │  trend_follower.py  [NEW]  │
-  │                      │  │                     │  │                            │
-  │  6-Layer Weighted    │  │  XGBoost  F1:0.497  │  │  5-factor bias score:      │
-  │  Scoring (-19→+19)   │  │  LightGBM F1:0.484  │  │  · Price > EMA50/200       │
-  │  Max Score = 19      │  │  RandomF  F1:0.475  │  │  · EMA50 > EMA200          │
-  │  Layers: 7+5+2+3+2   │  │  MLP      F1:0.460  │  │  · Higher Highs/Lows       │
-  │  Regime: BLOCKER     │  │  Optuna tuned       │  │  · 30-bar ROC > +10%       │
-  └──────────────────────┘  └─────────────────────┘  │                            │
-            │                         │               │  Output: STRONG_BULL │     │
-            └───────────────┬─────────┘               │         BULL │ NEUTRAL│    │
-                            │                         │         BEAR │ STR.BEAR    │
-                            ▼                         └────────────────────────────┘
-  ┌─────────────────────────────────────────────────────────────────────────────────┐
-  │  TREND AWARE SIGNAL ENGINE (v2 NEW)  — trend_follower.py                        │
-  │  Wraps SignalEngine + injects Market Bias                                       │
-  │                                                                                 │
-  │  STRONG_BULL: LONG thresh = 3, SHORT thresh = -12, TP3 = 8×ATR, pos_mult 1.3× │
-  │  BULL:        LONG thresh = 4, SHORT thresh = -10, TP3 = 6×ATR, pos_mult 1.1×  │
-  │  NEUTRAL:     LONG thresh = 4, SHORT thresh = -4,  TP3 = 5×ATR, pos_mult 1.0×  │
-  │  BEAR:        LONG thresh = 10, SHORT thresh = -4, TP3 = 5×ATR, pos_mult 0.6×  │
-  │  STRONG_BEAR: LONG thresh = 14, SHORT thresh = -3, TP3 = 5×ATR, pos_mult 0.4×  │
-  └─────────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      ▼
-  ┌─────────────────────────────────────────────────────────────────────────────────┐
-  │  HIGH SELECTIVITY FILTER (v2 NEW)                                               │
-  │  min_confidence = 0.70  (was 0.60 in v1)                                        │
-  │  Confidence gate: SKIP signals with conf < 70%                                  │
-  │  Effect: fewer trades, higher quality → win rate 30% → 61%                      │
-  └─────────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      ▼
-  ┌─────────────────────────────────────────────────────────────────────────────────┐
-  │  ENTRY FILTERS (v2 NEW) — entry_filters.py                                      │
-  │                                                                                 │
-  │  1. PullbackEntry     — RSI-5 overbought check → wait for pullback zone (≤5 bar)│
-  │  2. CandlePattern     — require strong-body candle at entry                     │
-  │  3. SRClearance       — skip entry within 0.3×ATR of S/R level                 │
-  │  4. TimeFilter        — prefer London/NY overlap hours                          │
-  │                                                                                 │
-  │  State: SIGNAL_FOUND → ENTRY_WAIT (max 5 bars) → PENDING_ENTRY → IN_TRADE      │
-  └─────────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      ▼
-  ┌─────────────────────────────────────────────────────────────────────────────────┐
-  │  RISK ENGINE v2 — risk_engine.py                                                 │
-  │                                                                                 │
-  │  Position Sizing (NEW):          Adaptive SL/TP (NEW):                         │
-  │  · Dynamic Kelly Criterion       · Regime-aware SL/TP multipliers               │
-  │    (recent_trades × bias × vol)  · BULL: SL 1.95×ATR, TP3 6-8×ATR             │
-  │  · Streak Scaling (win/loss run) · NORMAL: SL 1.5×ATR, TP3 5×ATR              │
-  │  · Volatility Sizing (ATR ratio) · Tighter TPs for higher hit rate              │
-  │  · max_risk = 3% (up from 2%)                                                  │
-  │  · max_drawdown = 20% (up from 15%)                                             │
-  │  Drawdown Scaling: 75%/50%/25%/0% at 5%/10%/15%/25% DD                         │
-  └─────────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      ▼
-  ┌─────────────────────────────────────────────────────────────────────────────────┐
-  │  EXECUTION ENGINE v2 — execution_engine.py                                      │
-  │                                                                                 │
-  │  State Machine:                        Tiered Trailing Stop (NEW):              │
-  │  IDLE→SCANNING→SIGNAL_FOUND            · Tier 0 (&lt;+0.5 ATR): SL fixed         │
-  │       →ENTRY_WAIT (pullback)           · Tier 1 (≥+0.5 ATR): breakeven lock    │
-  │       →PENDING_ENTRY→IN_TRADE          · Tier 2 (≥+1 ATR):   trail 1.5×ATR    │
-  │       →PARTIAL_EXIT→CLOSING            · Tier 3 (≥+2 ATR):   trail 1.0×ATR    │
-  │                                        · Tier 4 (≥+3 ATR):   trail 0.7×ATR    │
-  │  Partial Exits (NEW):                                                           │
-  │  · TP1 (40%) → move SL to breakeven                                             │
-  │  · TP2 (30%) → trail at 1×ATR                                                  │
-  │  · TP3 (30%) → runner, wide trail                                               │
-  │  Fees: Slippage 0.05% · Maker 0.02% · Taker 0.04%                              │
-  └─────────────────────────────────────────────────────────────────────────────────┘
-                    │
-       ┌────────────┼───────────────────┬────────────────────┐
-       ▼            ▼                   ▼                    ▼
+  LAYER 0 — DATA PIPELINE (data_pipeline.py)
+  btcusd_1-min_data.csv → resample 1min→4H → btcusd_4h.parquet (cache)
+  17,532 candles (2017-01-01 → 2024-12-31) │ validated OHLCV │ UTC timezone
+
+  LAYER 1 — FEATURE ENGINE (feature_engine.py)
+  50+ Technical Indicators across 5 layers
+  ├─ L1 Trend (12):     EMA 21/55/200, HMA, Supertrend, ADX-14
+  ├─ L2 Momentum (20):  RSI-14, MACD+Hist, Z-Score(50), Stoch RSI
+  ├─ L3 Volatility (14): Bollinger %B, Keltner Channel, ATR-14, Vol Regime
+  ├─ L4 Volume (10):    OBV+slope, Volume Ratio MA, Volume Trend
+  └─ L5 Price Action (10): Market Structure, Price Momentum (1/6/42 bar)
+                                        Output: btcusd_4h_features.parquet
+
+  SIGNAL ENGINE v1          ML MODELS (Tuned)       MARKET BIAS DETECTOR
+  signal_engine.py          ml_models.py            trend_follower.py [NEW]
+
+  6-Layer Weighted          XGBoost  F1:0.497       5-factor bias score:
+  Scoring (-19→+19)         LightGBM F1:0.484       · Price > EMA50/200
+  Max Score = 19            RandomF  F1:0.475       · EMA50 > EMA200
+  Layers: 7+5+2+3+2         MLP      F1:0.460       · Higher Highs/Lows
+  Regime: BLOCKER           Optuna tuned            · 30-bar ROC > +10%
+                                                    Output: STRONG_BULL │
+                                                            BULL │ NEUTRAL│
+                                                            BEAR │ STR.BEAR
+
+  TREND AWARE SIGNAL ENGINE (v2 NEW) — trend_follower.py
+  Wraps SignalEngine + injects Market Bias
+
+  STRONG_BULL: LONG thresh = 3, SHORT thresh = -12, TP3 = 8×ATR, pos_mult 1.3×
+  BULL:        LONG thresh = 4, SHORT thresh = -10, TP3 = 6×ATR, pos_mult 1.1×
+  NEUTRAL:     LONG thresh = 4, SHORT thresh = -4,  TP3 = 5×ATR, pos_mult 1.0×
+  BEAR:        LONG thresh = 10, SHORT thresh = -4, TP3 = 5×ATR, pos_mult 0.6×
+  STRONG_BEAR: LONG thresh = 14, SHORT thresh = -3, TP3 = 5×ATR, pos_mult 0.4×
+
+  HIGH SELECTIVITY FILTER (v2 NEW)
+  min_confidence = 0.70 (was 0.60 in v1)
+  Confidence gate: SKIP signals with conf < 70%
+  Effect: fewer trades, higher quality → win rate 30% → 61%
+
+  ENTRY FILTERS (v2 NEW) — entry_filters.py
+  1. PullbackEntry     — RSI-5 overbought check → wait for pullback zone (≤5 bar)
+  2. CandlePattern     — require strong-body candle at entry
+  3. SRClearance       — skip entry within 0.3×ATR of S/R level
+  4. TimeFilter        — prefer London/NY overlap hours
+  State: SIGNAL_FOUND → ENTRY_WAIT (max 5 bars) → PENDING_ENTRY → IN_TRADE
+
+  RISK ENGINE v2 — risk_engine.py
+  Position Sizing (NEW):          Adaptive SL/TP (NEW):
+  · Dynamic Kelly Criterion       · Regime-aware SL/TP multipliers
+    (recent_trades × bias × vol)  · BULL: SL 1.95×ATR, TP3 6-8×ATR
+  · Streak Scaling (win/loss run) · NORMAL: SL 1.5×ATR, TP3 5×ATR
+  · Volatility Sizing (ATR ratio) · Tighter TPs for higher hit rate
+  · max_risk = 3% (up from 2%)
+  · max_drawdown = 20% (up from 15%)
+  Drawdown Scaling: 75%/50%/25%/0% at 5%/10%/15%/25% DD
+
+  EXECUTION ENGINE v2 — execution_engine.py
+  State Machine:                        Tiered Trailing Stop (NEW):
+  IDLE→SCANNING→SIGNAL_FOUND            · Tier 0 (<+0.5 ATR): SL fixed
+       →ENTRY_WAIT (pullback)           · Tier 1 (≥+0.5 ATR): breakeven lock
+       →PENDING_ENTRY→IN_TRADE          · Tier 2 (≥+1 ATR):   trail 1.5×ATR
+       →PARTIAL_EXIT→CLOSING            · Tier 3 (≥+2 ATR):   trail 1.0×ATR
+                                        · Tier 4 (≥+3 ATR):   trail 0.7×ATR
+  Partial Exits (NEW):
+  · TP1 (40%) → move SL to breakeven
+  · TP2 (30%) → trail at 1×ATR
+  · TP3 (30%) → runner, wide trail
+  Fees: Slippage 0.05% · Maker 0.02% · Taker 0.04%
+
+  OUTPUT:
   ┌──────────┐  ┌──────────┐  ┌──────────────────┐  ┌──────────────────┐
   │  1× BACK │  │ 10× LEV  │  │  MONTE CARLO     │  │  WALK-FORWARD    │
   │  TEST    │  │  $1,000  │  │  10k sims (v1)   │  │  OPTIM (v1)      │
   │  2019-24 │  │  $1,000→ │  │  Ruin: 0.11%     │  │  6 windows       │
   │ +109.4%  │  │ $97,743  │  │  Kelly: 7.71×    │  │  CS: 0.455       │
   └──────────┘  └──────────┘  └──────────────────┘  └──────────────────┘
-</div>
-</div>
+```
 
-<!-- ════════════════════════════════════════════════════════ 3. MODULES v2 -->
-<div class="section">
-  <div class="section-title"><div class="num">3</div> Modul Sistem — v1 vs v2</div>
+---
 
-  <table>
-    <thead>
-      <tr>
-        <th>Modul</th><th>File</th><th>v1</th><th>v2 Enhancement</th><th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Data Pipeline</strong></td>
-        <td><code>data_pipeline.py</code></td>
-        <td>1-min → 4H resample, Parquet cache</td>
-        <td>—</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Feature Engine</strong></td>
-        <td><code>feature_engine.py</code></td>
-        <td>50+ indicators, 5 layers</td>
-        <td>vol_regime column (0-3) for adaptive SL/TP</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Signal Engine</strong></td>
-        <td><code>signal_engine.py</code></td>
-        <td>6-layer scoring −19→+19, min_conf=0.60</td>
-        <td>min_conf raised to 0.70 via wrapper</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Market Bias Detector</strong></td>
-        <td><code>trend_follower.py</code></td>
-        <td>—</td>
-        <td><span class="tag tag-v2">NEW</span> 5-factor bull/bear bias (score 0–6), recalc every 24 bars</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>TrendAwareSignalEngine</strong></td>
-        <td><code>trend_follower.py</code></td>
-        <td>—</td>
-        <td><span class="tag tag-v2">NEW</span> Wraps SignalEngine, bias-adjusted thresholds, TP3 up to 8×ATR in STRONG_BULL</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Entry Filters</strong></td>
-        <td><code>entry_filters.py</code></td>
-        <td>—</td>
-        <td><span class="tag tag-v2">NEW</span> PullbackEntry + CandlePattern + SRClearance + TimeFilter (4 independent filters)</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Adaptive SL/TP</strong></td>
-        <td><code>risk_engine.py</code></td>
-        <td>Fixed 1.5×/5.0× ATR</td>
-        <td><span class="tag tag-v2">NEW</span> Regime + vol_percentile + trend_strength → dynamic multipliers</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Dynamic Position Sizing</strong></td>
-        <td><code>risk_engine.py</code></td>
-        <td>Half-Kelly fixed</td>
-        <td><span class="tag tag-v2">NEW</span> Dynamic Kelly + Streak Scaling + Vol Sizing + Signal Quality factor</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Partial Exit System</strong></td>
-        <td><code>execution_engine.py</code></td>
-        <td>All-or-nothing SL/TP</td>
-        <td><span class="tag tag-v2">NEW</span> 40%@TP1, 30%@TP2, 30% runner · move SL→breakeven at TP1</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Tiered Trailing Stop</strong></td>
-        <td><code>execution_engine.py</code></td>
-        <td>Simple trailing</td>
-        <td><span class="tag tag-v2">NEW</span> 4-tier: 0.5/1.0/2.0/3.0 ATR profit thresholds → 1.5/1.0/0.7 ATR trail</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>ML Models</strong></td>
-        <td><code>ml_models.py</code></td>
-        <td>XGB, LGB, RF, MLP (Optuna tuned)</td>
-        <td>—</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Walk-Forward Optim</strong></td>
-        <td><code>walk_forward.py</code></td>
-        <td>6 OOS windows, CS=0.455</td>
-        <td>—</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Monte Carlo</strong></td>
-        <td><code>monte_carlo.py</code></td>
-        <td>10k sims, Ruin=0.11%</td>
-        <td>—</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-      <tr>
-        <td><strong>Leveraged Backtest</strong></td>
-        <td><code>run_leveraged_backtest.py</code></td>
-        <td>—</td>
-        <td><span class="tag tag-v2">NEW</span> 10× leverage sim, liquidation guard, capital carry-over, $1k start</td>
-        <td><span class="tag tag-green">Done</span></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+## 3. System Modules — v1 vs v2
 
-<!-- ════════════════════════════════════════════════════════ 4. COMPARISON BASELINE vs OPTIMIZED -->
-<div class="section">
-  <div class="section-title"><div class="num">4</div> Hasil Backtest — Baseline v1 vs Optimized v2</div>
+| Module | File | v1 | v2 Enhancement | Status |
+|--------|------|-----|----------------|--------|
+| Data Pipeline | `data_pipeline.py` | 1-min → 4H resample, Parquet cache | — | Done |
+| Feature Engine | `feature_engine.py` | 50+ indicators, 5 layers | vol_regime column (0-3) for adaptive SL/TP | Done |
+| Signal Engine | `signal_engine.py` | 6-layer scoring −19→+19, min_conf=0.60 | min_conf raised to 0.70 via wrapper | Done |
+| Market Bias Detector | `trend_follower.py` | — | **NEW** 5-factor bull/bear bias (score 0–6), recalc every 24 bars | Done |
+| TrendAwareSignalEngine | `trend_follower.py` | — | **NEW** Wraps SignalEngine, bias-adjusted thresholds, TP3 up to 8×ATR in STRONG_BULL | Done |
+| Entry Filters | `entry_filters.py` | — | **NEW** PullbackEntry + CandlePattern + SRClearance + TimeFilter (4 independent filters) | Done |
+| Adaptive SL/TP | `risk_engine.py` | Fixed 1.5×/5.0× ATR | **NEW** Regime + vol_percentile + trend_strength → dynamic multipliers | Done |
+| Dynamic Position Sizing | `risk_engine.py` | Half-Kelly fixed | **NEW** Dynamic Kelly + Streak Scaling + Vol Sizing + Signal Quality factor | Done |
+| Partial Exit System | `execution_engine.py` | All-or-nothing SL/TP | **NEW** 40%@TP1, 30%@TP2, 30% runner · move SL→breakeven at TP1 | Done |
+| Tiered Trailing Stop | `execution_engine.py` | Simple trailing | **NEW** 4-tier: 0.5/1.0/2.0/3.0 ATR profit thresholds → 1.5/1.0/0.7 ATR trail | Done |
+| ML Models | `ml_models.py` | XGB, LGB, RF, MLP (Optuna tuned) | — | Done |
+| Walk-Forward Optim | `walk_forward.py` | 6 OOS windows, CS=0.455 | — | Done |
+| Monte Carlo | `monte_carlo.py` | 10k sims, Ruin=0.11% | — | Done |
+| Leveraged Backtest | `run_leveraged_backtest.py` | — | **NEW** 10× leverage sim, liquidation guard, capital carry-over, $1k start | Done |
 
-  <div class="highlight-box">
-    <strong>Setup:</strong> Baseline = v1 system (2023–2024 OOS, $100k, leverage 1×, fixed SL/TP, min_conf 0.60) &nbsp;|&nbsp;
-    Optimized = v2 system (2019–2024, $100k/yr, semua optimisasi aktif, min_conf 0.70, max_risk 3%)
-  </div>
+---
 
-  <table>
-    <thead>
-      <tr>
-        <th>Metric</th>
-        <th>Baseline v1</th>
-        <th>Optimized v2</th>
-        <th>Change</th>
-        <th>Target</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Total Return</strong></td>
-        <td>+29.54%</td>
-        <td class="green">+109.41%</td>
-        <td><span class="delta-pos">+79.87pp</span></td>
-        <td>↑</td>
-        <td><span class="tag tag-green">✓ PASS</span></td>
-      </tr>
-      <tr>
-        <td><strong>Win Rate</strong></td>
-        <td>30.2%</td>
-        <td class="green">61.3%</td>
-        <td><span class="delta-pos">+31.07pp</span></td>
-        <td>&gt; 50%</td>
-        <td><span class="tag tag-green">✓ PASS</span></td>
-      </tr>
-      <tr>
-        <td><strong>Max Drawdown</strong></td>
-        <td>13.84%</td>
-        <td class="red">39.49%</td>
-        <td><span class="delta-neg">+25.65pp ↑</span></td>
-        <td>&lt; 20%</td>
-        <td><span class="tag tag-red">✗ FAIL</span></td>
-      </tr>
-      <tr>
-        <td><strong>Sharpe Ratio</strong></td>
-        <td>0.944</td>
-        <td class="red">−0.355</td>
-        <td><span class="delta-neg">−1.299</span></td>
-        <td>&gt; 1.0</td>
-        <td><span class="tag tag-red">✗ FAIL</span></td>
-      </tr>
-      <tr>
-        <td><strong>Profit Factor</strong></td>
-        <td>N/A</td>
-        <td class="green">1.867</td>
-        <td>—</td>
-        <td>&gt; 1.5</td>
-        <td><span class="tag tag-green">✓ PASS</span></td>
-      </tr>
-      <tr>
-        <td><strong>vs Buy &amp; Hold BTC</strong></td>
-        <td>−194%</td>
-        <td class="red">−2,461%</td>
-        <td><span class="delta-neg">−2,268pp</span></td>
-        <td>&gt; 0%</td>
-        <td><span class="tag tag-red">✗ FAIL</span></td>
-      </tr>
-      <tr>
-        <td><strong>SL Exit Rate</strong></td>
-        <td>89.0%</td>
-        <td class="green">22.5%</td>
-        <td><span class="delta-pos">−66.5pp</span></td>
-        <td>↓</td>
-        <td><span class="tag tag-green">✓ PASS</span></td>
-      </tr>
-      <tr>
-        <td><strong>Trail Stop Exit Rate</strong></td>
-        <td>—</td>
-        <td class="blue">69.7%</td>
-        <td>—</td>
-        <td>—</td>
-        <td><span class="tag tag-blue">NEW</span></td>
-      </tr>
-      <tr>
-        <td><strong>Avg Win (R)</strong></td>
-        <td>3.20R</td>
-        <td class="yellow">1.00R</td>
-        <td><span class="delta-neg">−2.20R</span></td>
-        <td>↑</td>
-        <td><span class="tag tag-yellow">⚠ LOWER</span></td>
-      </tr>
-      <tr>
-        <td><strong>Avg Loss (R)</strong></td>
-        <td>1.04R</td>
-        <td class="red">1.37R</td>
-        <td><span class="delta-neg">+0.33R ↑</span></td>
-        <td>↓</td>
-        <td><span class="tag tag-yellow">⚠ HIGHER</span></td>
-      </tr>
-      <tr>
-        <td><strong>Total Trades</strong></td>
-        <td>116</td>
-        <td class="green">142</td>
-        <td><span class="delta-pos">+26</span></td>
-        <td>—</td>
-        <td><span class="tag tag-blue">+22%</span></td>
-      </tr>
-      <tr>
-        <td><strong>TP3 Exit Rate</strong></td>
-        <td>11.1%</td>
-        <td class="blue">7.75%</td>
-        <td>−3.35pp</td>
-        <td>—</td>
-        <td><span class="tag tag-yellow">⚠ Lower</span></td>
-      </tr>
-    </tbody>
-  </table>
+## 4. Backtest Results — Baseline v1 vs Optimized v2
 
-  <br>
-  <div class="two-col">
-    <div class="warn-box">
-      <strong>Paradox Win Rate vs Avg Win R:</strong> Kenaikan win rate dari 30% → 61% terjadi karena partial exit (40% TP1 di breakeven-locked, 30% TP2). Akibatnya, trade "menang" lebih sering namun dengan R lebih kecil (1.0R vs 3.2R). Trade-off ini adalah fitur, bukan bug — total PnL tetap lebih tinggi (+109% vs +29%).
-    </div>
-    <div class="success-box">
-      <strong>Trail Stop 69.7%:</strong> Mayoritas exit via trailing stop adalah positif — ini berarti sistem berhasil men-lock profit dan tidak membiarkan winner menjadi loser. SL exit 22.5% jauh lebih sehat daripada 89% di v1.
-    </div>
-  </div>
-</div>
+**Setup:** Baseline = v1 system (2023–2024 OOS, $100k, leverage 1×, fixed SL/TP, min_conf 0.60) | Optimized = v2 system (2019–2024, $100k/yr, all optimizations active, min_conf 0.70, max_risk 3%)
 
-<!-- ════════════════════════════════════════════════════════ 5. YEAR-BY-YEAR (1x) -->
-<div class="section">
-  <div class="section-title"><div class="num">5</div> Year-by-Year Breakdown — 1× Leverage, $100,000/Tahun</div>
+| Metric | Baseline v1 | Optimized v2 | Change | Target | Status |
+|--------|-------------|--------------|--------|--------|--------|
+| Total Return | +29.54% | +109.41% | +79.87pp | ↑ | ✓ PASS |
+| Win Rate | 30.2% | 61.3% | +31.07pp | > 50% | ✓ PASS |
+| Max Drawdown | 13.84% | 39.49% | +25.65pp ↑ | < 20% | ✗ FAIL |
+| Sharpe Ratio | 0.944 | −0.355 | −1.299 | > 1.0 | ✗ FAIL |
+| Profit Factor | N/A | 1.867 | — | > 1.5 | ✓ PASS |
+| vs Buy & Hold BTC | −194% | −2,461% | −2,268pp | > 0% | ✗ FAIL |
+| SL Exit Rate | 89.0% | 22.5% | −66.5pp | ↓ | ✓ PASS |
+| Trail Stop Exit Rate | — | 69.7% | — | — | NEW |
+| Avg Win (R) | 3.20R | 1.00R | −2.20R | ↑ | ⚠ LOWER |
+| Avg Loss (R) | 1.04R | 1.37R | +0.33R ↑ | ↓ | ⚠ HIGHER |
+| Total Trades | 116 | 142 | +26 | — | +22% |
+| TP3 Exit Rate | 11.1% | 7.75% | −3.35pp | — | ⚠ Lower |
 
-  <p style="margin-bottom:16px">Setiap tahun dimulai dengan modal <strong>$100,000</strong> (tidak kumulatif). Signal engine: TrendAwareSignalEngine + HighSelectivity(70%). Config: max_risk=3%, leverage=1×, adaptive SL/TP, partial exits.</p>
+**Win Rate vs Avg Win R Paradox:** The win rate increase from 30% → 61% occurred due to partial exit (40% TP1 at breakeven-locked, 30% TP2). As a result, trades "win" more often but with smaller R (1.0R vs 3.2R). This trade-off is a feature, not a bug — total PnL is still higher (+109% vs +29%).
 
-  <table>
-    <thead>
-      <tr>
-        <th>Tahun</th><th>Periode / Kondisi</th><th>Trades</th><th>Win Rate</th>
-        <th>PnL</th><th>Return</th><th>Max DD</th><th>Sharpe</th><th>PF</th><th>Catatan</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="yr-row-pos">
-        <td><strong>2019</strong></td>
-        <td>Bull Recovery</td>
-        <td>4</td>
-        <td class="green">50.0%</td>
-        <td class="green">+$7,691</td>
-        <td class="green">+7.69%</td>
-        <td class="green">6.36%</td>
-        <td class="yellow">−1.064</td>
-        <td class="green">2.05</td>
-        <td>Sedikit sinyal berkualitas. 2 TP3 + 2 SL.</td>
-      </tr>
-      <tr class="yr-row-pos">
-        <td><strong>2020</strong></td>
-        <td>COVID + Rally</td>
-        <td>22</td>
-        <td class="green">63.6%</td>
-        <td class="green">+$17,992</td>
-        <td class="green">+17.99%</td>
-        <td class="green">8.75%</td>
-        <td class="yellow">−0.550</td>
-        <td class="green">1.72</td>
-        <td>Trail stop dominan (73%). Rally Q4 mengangkat.</td>
-      </tr>
-      <tr class="yr-row-pos">
-        <td><strong>2021</strong></td>
-        <td>Peak Bull</td>
-        <td>31</td>
-        <td class="green">54.8%</td>
-        <td class="green">+$6,910</td>
-        <td class="green">+6.91%</td>
-        <td class="yellow">14.87%</td>
-        <td class="yellow">−0.701</td>
-        <td class="yellow">1.17</td>
-        <td>Volatile — DD 14.9%, banyak trail exits.</td>
-      </tr>
-      <tr class="yr-row-pos">
-        <td><strong>2022</strong></td>
-        <td><span class="tag tag-red">Bear Market</span></td>
-        <td>35</td>
-        <td class="green">60.0%</td>
-        <td class="green"><strong>+$43,584</strong></td>
-        <td class="green"><strong>+43.58%</strong></td>
-        <td class="green">9.75%</td>
-        <td class="yellow">−0.086</td>
-        <td class="green">2.05</td>
-        <td>🏆 Best year. STRONG_BEAR → SHORT bias sangat efektif.</td>
-      </tr>
-      <tr class="yr-row-neg">
-        <td><strong>2023</strong></td>
-        <td><span class="tag tag-yellow">Recovery</span></td>
-        <td>23</td>
-        <td class="green">60.9%</td>
-        <td class="red"><strong>−$21,067</strong></td>
-        <td class="red"><strong>−21.07%</strong></td>
-        <td class="red">39.49%</td>
-        <td class="red">−0.436</td>
-        <td class="red">0.72</td>
-        <td>⚠ Worst year. Sideways market. DD 39.5% adalah outlier. Big loses despite high WR.</td>
-      </tr>
-      <tr class="yr-row-pos">
-        <td><strong>2024</strong></td>
-        <td><span class="tag tag-green">ETF Bull</span></td>
-        <td>27</td>
-        <td class="green"><strong>70.4%</strong></td>
-        <td class="green"><strong>+$54,302</strong></td>
-        <td class="green"><strong>+54.30%</strong></td>
-        <td class="green">10.91%</td>
-        <td class="green">0.028</td>
-        <td class="green">3.49</td>
-        <td>🏆 Best win rate. ETF momentum. PF 3.49 outstanding.</td>
-      </tr>
-      <tr style="background:rgba(88,166,255,.05)">
-        <td colspan="2"><strong>TOTAL / AVG (6 Tahun)</strong></td>
-        <td><strong>142</strong></td>
-        <td class="green"><strong>61.3%</strong></td>
-        <td class="green"><strong>+$109,411</strong></td>
-        <td class="green"><strong>+109.41%</strong></td>
-        <td class="red"><strong>39.49%</strong></td>
-        <td class="red"><strong>−0.355</strong></td>
-        <td class="green"><strong>1.867</strong></td>
-        <td>5/6 tahun profitable. 2023 = outlier.</td>
-      </tr>
-    </tbody>
-  </table>
+**Trail Stop 69.7%:** The majority of exits via trailing stop are positive — this means the system successfully locks profits and doesn't let winners become losers. SL exit 22.5% is much healthier than 89% in v1.
 
-  <br>
-  <div class="two-col">
-    <div class="card">
-      <h3>Exit Reason Distribution (All 6 Years)</h3>
-      <table>
-        <thead><tr><th>Exit Type</th><th>Count</th><th>%</th><th>Makna</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><span class="tag tag-blue">TRAIL_STOP</span></td>
-            <td>99</td>
-            <td class="green">69.7%</td>
-            <td>Profit dikunci, trade mengikuti trend</td>
-          </tr>
-          <tr>
-            <td><span class="tag tag-red">STOP_LOSS</span></td>
-            <td>32</td>
-            <td class="yellow">22.5%</td>
-            <td>Full loss — turun dari 89% (v1)</td>
-          </tr>
-          <tr>
-            <td><span class="tag tag-green">TP3 (Runner)</span></td>
-            <td>11</td>
-            <td class="blue">7.75%</td>
-            <td>Full TP3 hit — paling profitable</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>Performance Targets</h3>
-      <table>
-        <thead><tr><th>Target</th><th>Goal</th><th>Result</th><th>Status</th></tr></thead>
-        <tbody>
-          <tr class="target-row"><td>Win Rate</td><td>&gt; 50%</td><td class="green">61.3%</td><td><span class="check-pass">✅</span></td></tr>
-          <tr class="target-row"><td>Max DD</td><td>&lt; 20%</td><td class="red">39.5%</td><td><span class="check-fail">❌</span></td></tr>
-          <tr class="target-row"><td>Beat B&amp;H</td><td>&gt; 0% vs BTC</td><td class="red">−2461%</td><td><span class="check-fail">❌</span></td></tr>
-          <tr class="target-row"><td>Sharpe</td><td>&gt; 1.0</td><td class="red">−0.355</td><td><span class="check-fail">❌</span></td></tr>
-          <tr class="target-row"><td>Profit Factor</td><td>&gt; 1.5</td><td class="green">1.867</td><td><span class="check-pass">✅</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+---
 
-<!-- ════════════════════════════════════════════════════════ 6. LEVERAGED BACKTEST -->
-<div class="section">
-  <div class="section-title"><div class="num num-green">6</div> Leveraged Backtest — 10× Leverage, Modal $1,000</div>
+## 5. Year-by-Year Breakdown — 1× Leverage, $100,000/Year
 
-  <div class="two-col" style="margin-bottom:18px">
-    <div class="purple-box">
-      <strong>Setup Leveraged Simulation:</strong><br>
-      Modal awal: <code>$1,000</code> &nbsp;|&nbsp; Leverage: <code>10×</code><br>
-      Hard SL per trade: <code>20% of account</code> = max loss $200 (awal)<br>
-      Capital: <strong>KUMULATIF</strong> antar tahun (tidak reset)<br>
-      Signal engine: TrendAware + HighSelectivity(70%)<br>
-      Liquidation threshold: 10% adverse price (= 1/leverage)
-    </div>
-    <div class="highlight-box">
-      <strong>Mekanisme 10× Leverage:</strong><br>
-      Margin per trade = 20% × capital<br>
-      Position notional = margin × 10<br>
-      Jika SL hit → lose 20% of account<br>
-      Jika TP3 (3R) → gain 60% of account in one trade<br>
-      Drawdown scaling tetap aktif (reduce size saat DD besar)
-    </div>
-  </div>
+Each year starts with **$100,000** capital (not cumulative). Signal engine: TrendAwareSignalEngine + HighSelectivity(70%). Config: max_risk=3%, leverage=1×, adaptive SL/TP, partial exits.
 
-  <div class="card-grid-4" style="margin-bottom:20px">
-    <div class="metric-card">
-      <div class="label">Modal Awal</div>
-      <div class="value blue">$1,000</div>
-      <div class="sub">2019-01-01</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Modal Akhir</div>
-      <div class="value green">$97,743</div>
-      <div class="sub">2024-12-31</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Total Return</div>
-      <div class="value green">+9,674%</div>
-      <div class="sub">6 tahun kumulatif</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Multiplier</div>
-      <div class="value purple">97.74×</div>
-      <div class="sub">$1k → $97.7k</div>
-    </div>
-  </div>
+| Year | Period/Condition | Trades | Win Rate | PnL | Return | Max DD | Sharpe | PF | Notes |
+|------|------------------|--------|----------|-----|--------|--------|--------|-----|-------|
+| 2019 | Bull Recovery | 4 | 50.0% | +$7,691 | +7.69% | 6.36% | −1.064 | 2.05 | Few quality signals. 2 TP3 + 2 SL. |
+| 2020 | COVID + Rally | 22 | 63.6% | +$17,992 | +17.99% | 8.75% | −0.550 | 1.72 | Trail stop dominant (73%). Q4 rally lifted. |
+| 2021 | Peak Bull | 31 | 54.8% | +$6,910 | +6.91% | 14.87% | −0.701 | 1.17 | Volatile — DD 14.9%, many trail exits. |
+| 2022 | Bear Market | 35 | 60.0% | +$43,584 | +43.58% | 9.75% | −0.086 | 2.05 | 🏆 Best year. STRONG_BEAR → SHORT bias very effective. |
+| 2023 | Recovery | 23 | 60.9% | −$21,067 | −21.07% | 39.49% | −0.436 | 0.72 | ⚠ Worst year. Sideways market. DD 39.5% is outlier. Big losses despite high WR. |
+| 2024 | ETF Bull | 27 | 70.4% | +$54,302 | +54.30% | 10.91% | 0.028 | 3.49 | 🏆 Best win rate. ETF momentum. PF 3.49 outstanding. |
+| **TOTAL** | **6 Years** | **142** | **61.3%** | **+$109,411** | **+109.41%** | **39.49%** | **−0.355** | **1.867** | 5/6 years profitable. 2023 = outlier. |
 
-  <table>
-    <thead>
-      <tr>
-        <th>Tahun</th><th>Periode</th>
-        <th>Modal Awal</th><th>Modal Akhir</th>
-        <th>PnL</th><th>Return</th>
-        <th>Trades</th><th>WR%</th><th>Max DD</th><th>Sharpe</th><th>Liquidasi</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="yr-row-pos">
-        <td><strong>2019</strong></td><td>Bull Recovery</td>
-        <td>$1,000</td><td class="green">$1,640</td>
-        <td class="green">+$640</td><td class="green">+64.0%</td>
-        <td>6</td><td class="green">50%</td>
-        <td class="yellow">25.3%</td><td class="green">0.130</td><td class="green">0</td>
-      </tr>
-      <tr class="yr-row-neg">
-        <td><strong>2020</strong></td><td>COVID + Rally</td>
-        <td>$1,640</td><td class="red">$1,435</td>
-        <td class="red">−$206</td><td class="red">−12.5%</td>
-        <td>22</td><td class="yellow">4.5%*</td>
-        <td class="yellow">25.5%</td><td class="red">−0.637</td><td class="green">0</td>
-      </tr>
-      <tr class="yr-row-pos">
-        <td><strong>2021</strong></td><td>Peak Bull</td>
-        <td>$1,435</td><td class="green">$1,875</td>
-        <td class="green">+$440</td><td class="green">+30.7%</td>
-        <td>31</td><td class="yellow">9.7%*</td>
-        <td class="yellow">25.1%</td><td class="yellow">−0.025</td><td class="green">0</td>
-      </tr>
-      <tr class="yr-row-pos">
-        <td><strong>2022</strong></td><td>Bear Market</td>
-        <td>$1,875</td><td class="green"><strong>$9,566</strong></td>
-        <td class="green"><strong>+$7,692</strong></td><td class="green"><strong>+410%</strong></td>
-        <td>36</td><td class="green">50%</td>
-        <td class="yellow">27.8%</td><td class="green">0.576</td><td class="green">0</td>
-      </tr>
-      <tr class="yr-row-neg">
-        <td><strong>2023</strong></td><td>Recovery</td>
-        <td>$9,566</td><td class="red">$6,969</td>
-        <td class="red">−$2,597</td><td class="red">−27.2%</td>
-        <td>27</td><td class="yellow">7.4%*</td>
-        <td class="red">27.2%</td><td class="red">−1.001</td><td class="green">0</td>
-      </tr>
-      <tr class="yr-row-pos">
-        <td><strong>2024</strong></td><td>ETF Bull</td>
-        <td>$6,969</td><td class="green"><strong>$97,743</strong></td>
-        <td class="green"><strong>+$90,774</strong></td><td class="green"><strong>+1,303%</strong></td>
-        <td>29</td><td class="green">65.5%</td>
-        <td class="yellow">25.5%</td><td class="green">0.845</td><td class="green">0</td>
-      </tr>
-      <tr style="background:rgba(63,185,80,.05)">
-        <td colspan="2"><strong>TOTAL (Kumulatif)</strong></td>
-        <td><strong>$1,000</strong></td>
-        <td class="green"><strong>$97,743</strong></td>
-        <td class="green"><strong>+$96,743</strong></td>
-        <td class="green"><strong>+9,674%</strong></td>
-        <td><strong>151</strong></td>
-        <td>—</td>
-        <td class="yellow">27.2%</td>
-        <td>—</td>
-        <td class="green"><strong>0</strong></td>
-      </tr>
-    </tbody>
-  </table>
+### Exit Reason Distribution (All 6 Years)
 
-  <p style="margin-top:10px;font-size:12px;color:var(--muted)">* WR% rendah pada 2020/2021/2023 disebabkan drawdown scaling: setelah loss awal, position sizing berkurang drastis → banyak "ghost trades" dengan risk≈0 yang terhitung sebagai trade namun tidak mengubah capital secara signifikan.</p>
+| Exit Type | Count | % | Meaning |
+|-----------|-------|---|---------|
+| TRAIL_STOP | 99 | 69.7% | Profit locked, trade follows trend |
+| STOP_LOSS | 32 | 22.5% | Full loss — down from 89% (v1) |
+| TP3 (Runner) | 11 | 7.75% | Full TP3 hit — most profitable |
 
-  <div class="two-col" style="margin-top:16px">
-    <div class="success-box">
-      <strong>Mengapa 2022 +410%?</strong><br>
-      BTC turun ~65% di 2022 (STRONG_BEAR bias). TrendAwareSignalEngine aggressively mengambil SHORT. Dengan 10× leverage, short trade yang sukses menghasilkan 10× return relatif terhadap margin. Drawdown scaling melindungi saat ada false reversals.
-    </div>
-    <div class="success-box">
-      <strong>Mengapa 2024 +1,303%?</strong><br>
-      BTC naik ~150% di 2024 (ETF approval). STRONG_BULL bias → long signals dominan. Capital sudah $6,969 saat masuk 2024. Dengan 20% margin, setiap trade menggunakan ~$1,400 margin → position $14,000. Compound 19 winners pada 65.5% WR menghasilkan parabolic growth.
-    </div>
-  </div>
+### Performance Targets
 
-  <div class="danger-box" style="margin-top:12px">
-    <strong>⚠ Peringatan Risiko Leverage 10×:</strong>
-    <ul style="margin-top:8px">
-      <li>Harga bergerak &gt;10% adverse dalam 1 candle → LIQUIDASI (100% margin hilang)</li>
-      <li>5 consecutive losses dengan SL 20%: $1,000 → $800 → $640 → $512 → $410 → $328 (compound loss)</li>
-      <li>2023 dengan leverage: −27.2% dari $9,566 = kehilangan $2,597 dalam satu tahun</li>
-      <li>Untuk live trading: rekomendasikan leverage ≤ 3× dan SL ≤ 5% per trade</li>
-      <li>Hasil backtest adalah simulasi historis — tidak menjamin performa masa depan</li>
-    </ul>
-  </div>
-</div>
+| Target | Goal | Result | Status |
+|--------|------|--------|--------|
+| Win Rate | > 50% | 61.3% | ✅ |
+| Max DD | < 20% | 39.5% | ❌ |
+| Beat B&H | > 0% vs BTC | −2461% | ❌ |
+| Sharpe | > 1.0 | −0.355 | ❌ |
+| Profit Factor | > 1.5 | 1.867 | ✅ |
 
-<!-- ════════════════════════════════════════════════════════ 7. SIGNAL ANALYSIS -->
-<div class="section">
-  <div class="section-title"><div class="num">7</div> Analisis Sinyal &amp; Entry Quality</div>
+---
 
-  <div class="two-col">
-    <div class="card">
-      <h3>Market Bias Distribution — TrendAwareSignalEngine</h3>
-      <p>Bias otomatis di-recalculate setiap 24 bar (≈ 4 hari). Threshold signal disesuaikan per bias:</p>
-      <table>
-        <thead><tr><th>Bias</th><th>LONG thr</th><th>SHORT thr</th><th>TP3 mult</th><th>Pos mult</th></tr></thead>
-        <tbody>
-          <tr><td><span class="tag tag-green">STRONG_BULL</span></td><td>≥ 3</td><td>≤ −12</td><td>8× ATR</td><td>1.3×</td></tr>
-          <tr><td><span class="tag tag-green">BULL</span></td><td>≥ 4</td><td>≤ −10</td><td>6× ATR</td><td>1.1×</td></tr>
-          <tr><td><span class="tag tag-yellow">NEUTRAL</span></td><td>≥ 4</td><td>≤ −4</td><td>5× ATR</td><td>1.0×</td></tr>
-          <tr><td><span class="tag tag-red">BEAR</span></td><td>≥ 10</td><td>≤ −4</td><td>5× ATR</td><td>0.6×</td></tr>
-          <tr><td><span class="tag tag-red">STRONG_BEAR</span></td><td>≥ 14</td><td>≤ −3</td><td>5× ATR</td><td>0.4×</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>HighSelectivity Filter — Confidence Gate</h3>
-      <p>v1 menggunakan threshold 0.60. v2 naik ke 0.70. Dampak:</p>
-      <table>
-        <thead><tr><th>Parameter</th><th>v1 (conf ≥ 0.60)</th><th>v2 (conf ≥ 0.70)</th></tr></thead>
-        <tbody>
-          <tr><td>Win Rate</td><td class="red">30.2%</td><td class="green">61.3%</td></tr>
-          <tr><td>Total Trades</td><td>116</td><td>142*</td></tr>
-          <tr><td>SL Exit Rate</td><td class="red">89%</td><td class="green">22.5%</td></tr>
-          <tr><td>Profit Factor</td><td>N/A</td><td class="green">1.87</td></tr>
-        </tbody>
-      </table>
-      <p style="font-size:12px;color:var(--muted);margin-top:8px">*142 trades pada 6yr vs 116 pada 2yr karena periode lebih panjang</p>
-    </div>
-  </div>
+## 6. Leveraged Backtest — 10× Leverage, $1,000 Capital
 
-  <div class="card" style="margin-top:4px">
-    <h3>Entry Filter System (PullbackEntry + 3 Filters)</h3>
-    <div class="three-col">
-      <div>
-        <h4>1. PullbackEntry</h4>
-        <p>RSI-5 check. Jika overbought (RSI &gt; 70) saat LONG signal → wait untuk pullback ke zone [close − 0.5×ATR, close] max 5 bars. Jika price kembali ke zone → entry dengan harga lebih baik.</p>
-      </div>
-      <div>
-        <h4>2. Candle Pattern</h4>
-        <p>Hanya entry pada candle dengan body kuat (body/range &gt; threshold). Menghindari doji/indecision candles sebagai entry trigger.</p>
-      </div>
-      <div>
-        <h4>3. SR Clearance + Time</h4>
-        <p>Skip entry jika dalam 0.3×ATR dari S/R level. TimeFilter memilih jam dengan likuiditas tinggi (London/NY overlap). Mengurangi false breakouts.</p>
-      </div>
-    </div>
-  </div>
-</div>
+### Leveraged Simulation Setup
 
-<!-- ════════════════════════════════════════════════════════ 8. ADAPTIVE SLTP + POSITION SIZING -->
-<div class="section">
-  <div class="section-title"><div class="num num-orange">8</div> Adaptive SL/TP &amp; Dynamic Position Sizing</div>
+- Initial capital: `$1,000`
+- Leverage: `10×`
+- Hard SL per trade: `20% of account` = max loss $200 (initial)
+- Capital: **CUMULATIVE** across years (no reset)
+- Signal engine: TrendAware + HighSelectivity(70%)
+- Liquidation threshold: 10% adverse price (= 1/leverage)
 
-  <div class="two-col">
-    <div class="card">
-      <h3>Adaptive SL/TP Multipliers</h3>
-      <p>SL/TP disesuaikan berdasarkan market regime (vol), volatility percentile, dan trend strength:</p>
-      <table>
-        <thead><tr><th>Kondisi</th><th>SL mult</th><th>TP1 mult</th><th>TP2 mult</th><th>TP3 mult</th></tr></thead>
-        <tbody>
-          <tr><td><span class="tag tag-green">BULL Bias</span></td><td>1.95× ATR</td><td>1.65×</td><td>2.75×</td><td>6–8×</td></tr>
-          <tr><td><span class="tag tag-yellow">NEUTRAL</span></td><td>1.5× ATR</td><td>2.0×</td><td>3.5×</td><td>5×</td></tr>
-          <tr><td><span class="tag tag-red">HIGH VOL</span></td><td colspan="4" style="color:var(--red)">SKIP — jangan trade saat volatilitas ekstrem</td></tr>
-        </tbody>
-      </table>
-      <p style="margin-top:10px">Partial exit strategy: <strong>40% @ TP1</strong> (lock profit, move SL → breakeven), <strong>30% @ TP2</strong> (trail at 1×ATR), <strong>30% runner</strong> menunggu TP3 dengan wide trail.</p>
-    </div>
-    <div class="card">
-      <h3>Tiered Trailing Stop</h3>
-      <p>Trailing stop aktif hanya setelah minimum profit dicapai (mencegah premature exit pada bar flat):</p>
-      <table>
-        <thead><tr><th>Tier</th><th>Profit Threshold</th><th>Action</th></tr></thead>
-        <tbody>
-          <tr><td><span class="tag tag-yellow">Tier 0</span></td><td>&lt; +0.5× ATR</td><td>SL fixed (tidak bergerak)</td></tr>
-          <tr><td><span class="tag tag-yellow">Tier 1</span></td><td>≥ +0.5× ATR</td><td>Lock ke breakeven (entry price)</td></tr>
-          <tr><td><span class="tag tag-blue">Tier 2</span></td><td>≥ +1× ATR</td><td>Trail 1.5× ATR dari close</td></tr>
-          <tr><td><span class="tag tag-green">Tier 3</span></td><td>≥ +2× ATR</td><td>Trail 1.0× ATR (tighter)</td></tr>
-          <tr><td><span class="tag tag-green">Tier 4</span></td><td>≥ +3× ATR</td><td>Trail 0.7× ATR (tightest)</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+### 10× Leverage Mechanism
 
-  <div class="card" style="margin-top:4px">
-    <h3>Dynamic Position Sizing Formula</h3>
-    <p>v2 menggunakan 4 faktor pengganda untuk posisi sizing:</p>
-    <div class="flowchart" style="font-size:12px;padding:20px">
+- Margin per trade = 20% × capital
+- Position notional = margin × 10
+- If SL hit → lose 20% of account
+- If TP3 (3R) → gain 60% of account in one trade
+- Drawdown scaling remains active (reduce size during large DD)
+
+### Summary Metrics
+
+| Metric | Value |
+|--------|-------|
+| Initial Capital | $1,000 (2019-01-01) |
+| Final Capital | $97,743 (2024-12-31) |
+| Total Return | +9,674% (6 years cumulative) |
+| Multiplier | 97.74× ($1k → $97.7k) |
+
+### Year-by-Year Leveraged Results
+
+| Year | Period | Start Capital | End Capital | PnL | Return | Trades | WR% | Max DD | Sharpe | Liquidations |
+|------|--------|---------------|-------------|-----|--------|--------|-----|--------|--------|--------------|
+| 2019 | Bull Recovery | $1,000 | $1,640 | +$640 | +64.0% | 6 | 50% | 25.3% | 0.130 | 0 |
+| 2020 | COVID + Rally | $1,640 | $1,435 | −$206 | −12.5% | 22 | 4.5%* | 25.5% | −0.637 | 0 |
+| 2021 | Peak Bull | $1,435 | $1,875 | +$440 | +30.7% | 31 | 9.7%* | 25.1% | −0.025 | 0 |
+| 2022 | Bear Market | $1,875 | $9,566 | +$7,692 | +410% | 36 | 50% | 27.8% | 0.576 | 0 |
+| 2023 | Recovery | $9,566 | $6,969 | −$2,597 | −27.2% | 27 | 7.4%* | 27.2% | −1.001 | 0 |
+| 2024 | ETF Bull | $6,969 | $97,743 | +$90,774 | +1,303% | 29 | 65.5% | 25.5% | 0.845 | 0 |
+| **TOTAL** | **Cumulative** | **$1,000** | **$97,743** | **+$96,743** | **+9,674%** | **151** | — | 27.2% | — | **0** |
+
+*Low WR% in 2020/2021/2023 caused by drawdown scaling: after initial loss, position sizing reduces drastically → many "ghost trades" with risk≈0 counted as trades but don't significantly change capital.
+
+### Why 2022 +410%?
+
+BTC dropped ~65% in 2022 (STRONG_BEAR bias). TrendAwareSignalEngine aggressively took SHORT. With 10× leverage, successful short trades yielded 10× return relative to margin. Drawdown scaling protected during false reversals.
+
+### Why 2024 +1,303%?
+
+BTC rose ~150% in 2024 (ETF approval). STRONG_BULL bias → long signals dominant. Capital was already $6,969 entering 2024. With 20% margin, each trade used ~$1,400 margin → $14,000 position. Compounding 19 winners at 65.5% WR produced parabolic growth.
+
+### ⚠ 10× Leverage Risk Warning
+
+- Price moves >10% adverse in 1 candle → LIQUIDATION (100% margin lost)
+- 5 consecutive losses with 20% SL: $1,000 → $800 → $640 → $512 → $410 → $328 (compound loss)
+- 2023 with leverage: −27.2% of $9,566 = losing $2,597 in one year
+- For live trading: recommend leverage ≤ 3× and SL ≤ 5% per trade
+- Backtest results are historical simulation — no guarantee of future performance
+
+---
+
+## 7. Signal Analysis & Entry Quality
+
+### Market Bias Distribution — TrendAwareSignalEngine
+
+Bias is automatically recalculated every 24 bars (≈ 4 days). Signal threshold adjusted per bias:
+
+| Bias | LONG thr | SHORT thr | TP3 mult | Pos mult |
+|------|----------|-----------|----------|----------|
+| STRONG_BULL | ≥ 3 | ≤ −12 | 8× ATR | 1.3× |
+| BULL | ≥ 4 | ≤ −10 | 6× ATR | 1.1× |
+| NEUTRAL | ≥ 4 | ≤ −4 | 5× ATR | 1.0× |
+| BEAR | ≥ 10 | ≤ −4 | 5× ATR | 0.6× |
+| STRONG_BEAR | ≥ 14 | ≤ −3 | 5× ATR | 0.4× |
+
+### HighSelectivity Filter — Confidence Gate
+
+v1 used threshold 0.60. v2 raised to 0.70. Impact:
+
+| Parameter | v1 (conf ≥ 0.60) | v2 (conf ≥ 0.70) |
+|-----------|------------------|------------------|
+| Win Rate | 30.2% | 61.3% |
+| Total Trades | 116 | 142* |
+| SL Exit Rate | 89% | 22.5% |
+| Profit Factor | N/A | 1.87 |
+
+*142 trades over 6yr vs 116 over 2yr due to longer period
+
+### Entry Filter System (PullbackEntry + 3 Filters)
+
+**1. PullbackEntry:** RSI-5 check. If overbought (RSI > 70) at LONG signal → wait for pullback to zone [close − 0.5×ATR, close] max 5 bars. If price returns to zone → entry at better price.
+
+**2. Candle Pattern:** Only enter on candles with strong body (body/range > threshold). Avoids doji/indecision candles as entry trigger.
+
+**3. SR Clearance + Time:** Skip entry if within 0.3×ATR of S/R level. TimeFilter selects hours with high liquidity (London/NY overlap). Reduces false breakouts.
+
+---
+
+## 8. Adaptive SL/TP & Dynamic Position Sizing
+
+### Adaptive SL/TP Multipliers
+
+SL/TP adjusted based on market regime (vol), volatility percentile, and trend strength:
+
+| Condition | SL mult | TP1 mult | TP2 mult | TP3 mult |
+|-----------|---------|----------|----------|----------|
+| BULL Bias | 1.95× ATR | 1.65× | 2.75× | 6–8× |
+| NEUTRAL | 1.5× ATR | 2.0× | 3.5× | 5× |
+| HIGH VOL | SKIP — don't trade during extreme volatility |
+
+Partial exit strategy: **40% @ TP1** (lock profit, move SL → breakeven), **30% @ TP2** (trail at 1×ATR), **30% runner** waiting for TP3 with wide trail.
+
+### Tiered Trailing Stop
+
+Trailing stop activates only after minimum profit reached (prevents premature exit on flat bars):
+
+| Tier | Profit Threshold | Action |
+|------|------------------|--------|
+| Tier 0 | < +0.5× ATR | SL fixed (doesn't move) |
+| Tier 1 | ≥ +0.5× ATR | Lock to breakeven (entry price) |
+| Tier 2 | ≥ +1× ATR | Trail 1.5× ATR from close |
+| Tier 3 | ≥ +2× ATR | Trail 1.0× ATR (tighter) |
+| Tier 4 | ≥ +3× ATR | Trail 0.7× ATR (tightest) |
+
+### Dynamic Position Sizing Formula
+
+v2 uses 4 multiplier factors for position sizing:
+
+```
 Final Risk % = base_risk_pct (3%)
-              × kelly_mult    (0.05 – 0.25, berdasar recent trades + market bias)
-              × streak_mult   (0.55× – 1.30×, berdasar win/loss streak)
-              × vol_mult      (0.50× – 1.20×, berdasar ATR ratio)
-              × quality_factor (0.50 – 1.00, berdasar signal confidence)
+              × kelly_mult    (0.05 – 0.25, based on recent trades + market bias)
+              × streak_mult   (0.55× – 1.30×, based on win/loss streak)
+              × vol_mult      (0.50× – 1.20×, based on ATR ratio)
+              × quality_factor (0.50 – 1.00, based on signal confidence)
 
 Hard caps: min 0.5%, max 5% of account balance
 
-Contoh (STRONG_BULL, 5-win streak, low vol, conf=0.85):
+Example (STRONG_BULL, 5-win streak, low vol, conf=0.85):
   3% × 0.25 × 1.30 × 1.20 × 0.925 = 1.08% → capped at ~1%
 
-Contoh (bear, 3-loss streak, high vol, conf=0.70):
-  3% × 0.08 × 0.75 × 0.70 × 0.85 = 0.107% → floored at 0.5%</div>
-  </div>
-</div>
+Example (bear, 3-loss streak, high vol, conf=0.70):
+  3% × 0.08 × 0.75 × 0.70 × 0.85 = 0.107% → floored at 0.5%
+```
 
-<!-- ════════════════════════════════════════════════════════ 9. ML MODELS (carry-over from v1) -->
-<div class="section">
-  <div class="section-title"><div class="num">9</div> Machine Learning — Optuna Tuned Models (v1 Reference)</div>
+---
 
-  <table>
-    <thead>
-      <tr>
-        <th>Model</th><th>CV F1 (5-fold)</th><th>Val F1</th><th>Test F1</th><th>Test Acc</th><th>Best Params</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>XGBoost</strong></td>
-        <td>0.4645</td><td>0.4086</td><td class="green">0.4966</td><td>55.1%</td>
-        <td>depth=9, lr=0.020, n_est=510</td>
-      </tr>
-      <tr>
-        <td><strong>LightGBM</strong></td>
-        <td>0.4655</td><td>0.4038</td><td>0.4845</td><td>56.2%</td>
-        <td>depth=8, lr=0.012, leaves=99</td>
-      </tr>
-      <tr>
-        <td><strong>Random Forest</strong></td>
-        <td class="green">0.4840</td><td>0.4027</td><td>0.4753</td><td class="green">58.5%</td>
-        <td>depth=15, n_est=114, min_split=20</td>
-      </tr>
-      <tr>
-        <td><strong>MLP</strong></td>
-        <td>0.4560</td><td>0.3849</td><td>0.4598</td><td>56.3%</td>
-        <td>layers=1, units=282, relu, lr=0.0036</td>
-      </tr>
-    </tbody>
-  </table>
+## 9. Machine Learning — Optuna Tuned Models (v1 Reference)
 
-  <div class="highlight-box" style="margin-top:14px">
-    <strong>Catatan:</strong> ML accuracy ~55–58% adalah wajar untuk data finansial yang sangat noisy. Pada v2, ML models digunakan sebagai lapisan filter tambahan (layer 2A). Namun performa backtest v2 didominasi oleh rule-based signal engine + trend following — bukan ML. Integrasi ML yang lebih dalam adalah roadmap v3.
-  </div>
-</div>
+| Model | CV F1 (5-fold) | Val F1 | Test F1 | Test Acc | Best Params |
+|-------|----------------|--------|---------|----------|-------------|
+| XGBoost | 0.4645 | 0.4086 | 0.4966 | 55.1% | depth=9, lr=0.020, n_est=510 |
+| LightGBM | 0.4655 | 0.4038 | 0.4845 | 56.2% | depth=8, lr=0.012, leaves=99 |
+| Random Forest | 0.4840 | 0.4027 | 0.4753 | 58.5% | depth=15, n_est=114, min_split=20 |
+| MLP | 0.4560 | 0.3849 | 0.4598 | 56.3% | layers=1, units=282, relu, lr=0.0036 |
 
-<!-- ════════════════════════════════════════════════════════ 10. RISK ANALYSIS -->
-<div class="section">
-  <div class="section-title"><div class="num">10</div> Analisis Risiko &amp; Monte Carlo (v1 Reference)</div>
+**Note:** ML accuracy ~55–58% is reasonable for highly noisy financial data. In v2, ML models are used as an additional filter layer (layer 2A). However, v2 backtest performance is dominated by rule-based signal engine + trend following — not ML. Deeper ML integration is on the v3 roadmap.
 
-  <div class="three-col">
-    <div class="metric-card">
-      <div class="label">Probability of Ruin (v1)</div>
-      <div class="value green">0.11%</div>
-      <div class="sub">Monte Carlo 10k simulations</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">Kelly Optimal Leverage</div>
-      <div class="value yellow">7.71×</div>
-      <div class="sub">Theoretical max dari MC</div>
-    </div>
-    <div class="metric-card">
-      <div class="label">WFO Consistency Score</div>
-      <div class="value yellow">0.455</div>
-      <div class="sub">6 OOS windows 2019–2024</div>
-    </div>
-  </div>
+---
 
-  <div class="two-col" style="margin-top:16px">
-    <div class="card">
-      <h3>Drawdown Scaling (Aktif di Semua Backtest)</h3>
-      <table>
-        <thead><tr><th>DD Level</th><th>Position Size</th><th>Status</th></tr></thead>
-        <tbody>
-          <tr><td>0 – 5%</td><td class="green">100% normal</td><td>Full trading</td></tr>
-          <tr><td>5 – 10%</td><td class="yellow">75%</td><td>Slight reduction</td></tr>
-          <tr><td>10 – 15%</td><td class="yellow">50%</td><td>Moderate caution</td></tr>
-          <tr><td>15 – 20%</td><td class="orange">25%</td><td>Heavy caution</td></tr>
-          <tr><td>&gt; 25%</td><td class="red">0% (STOP)</td><td>Circuit breaker</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>Risk Limits Per Trade</h3>
-      <table>
-        <thead><tr><th>Parameter</th><th>v1</th><th>v2</th></tr></thead>
-        <tbody>
-          <tr><td>Max Risk/Trade</td><td>2%</td><td class="green">3% (↑)</td></tr>
-          <tr><td>Max Total DD</td><td>15%</td><td class="yellow">20% (↑)</td></tr>
-          <tr><td>Max Daily Loss</td><td>5%</td><td>5%</td></tr>
-          <tr><td>Max Concurrent</td><td>3</td><td>3</td></tr>
-          <tr><td>Min RR Ratio</td><td>1.5×</td><td>1.5×</td></tr>
-          <tr><td>Min Confidence</td><td>0.60</td><td class="green">0.70 (↑)</td></tr>
-          <tr><td>Slippage</td><td>0.05%</td><td>0.05%</td></tr>
-          <tr><td>Taker Fee</td><td>0.04%</td><td>0.04%</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+## 10. Risk Analysis & Monte Carlo (v1 Reference)
 
-<!-- ════════════════════════════════════════════════════════ 11. DIAGNOSIS: 2023 ANOMALY -->
-<div class="section">
-  <div class="section-title"><div class="num num-purple">11</div> Diagnosis: Anomali 2023 (−21% Return, DD 39.5%)</div>
+| Metric | Value |
+|--------|-------|
+| Probability of Ruin (v1) | 0.11% (Monte Carlo 10k simulations) |
+| Kelly Optimal Leverage | 7.71× (Theoretical max from MC) |
+| WFO Consistency Score | 0.455 (6 OOS windows 2019–2024) |
 
-  <p>Tahun 2023 adalah outlier yang menarik perhatian — meskipun <strong>win rate 60.9%</strong> (tertinggi kedua setelah 2024), sistem mengalami loss −21.07% dengan drawdown 39.5%. Berikut analisis penyebabnya:</p>
+### Drawdown Scaling (Active in All Backtests)
 
-  <div class="two-col">
-    <div class="card">
-      <h3>Data 2023: 23 Trades, WR 60.9%</h3>
-      <table>
-        <thead><tr><th>Exit Type</th><th>Count</th><th>%</th></tr></thead>
-        <tbody>
-          <tr><td><span class="tag tag-blue">TRAIL_STOP</span></td><td>16</td><td>69.6%</td></tr>
-          <tr><td><span class="tag tag-red">STOP_LOSS</span></td><td>5</td><td>21.7%</td></tr>
-          <tr><td><span class="tag tag-green">TP3</span></td><td>2</td><td>8.7%</td></tr>
-        </tbody>
-      </table>
-      <p style="margin-top:10px">Avg Win R: 1.70R &nbsp;|&nbsp; Avg Loss R: 0.57R &nbsp;|&nbsp; PF: 0.72</p>
-      <p><strong>Paradox:</strong> WR 60.9% namun PF 0.72 (lebih banyak kalah uang). Ini terjadi karena losses lebih besar secara dollar meski R lebih kecil — capital lebih besar di 2023 ($9,566 setelah 2022 boom) sehingga bahkan loss kecil = dollar besar.</p>
-    </div>
-    <div class="card">
-      <h3>Root Cause Analysis</h3>
-      <ul style="margin-top:8px">
-        <li><strong>Market Whipsaw:</strong> BTC di 2023 mengalami beberapa false breakouts besar sebelum rally akhir tahun. Sistem masuk SHORT saat recovery early-year, kemudian kena reversal.</li>
-        <li><strong>Large Capital Effect:</strong> Setelah 2022 gain besar ($1,875 → $9,566), capital 5× lebih besar. Loss yang sama secara % = dollar loss 5× lebih besar.</li>
-        <li><strong>Sideways Market:</strong> Q1-Q2 2023 sangat choppy. TrendAware engine kesulitan membedakan ranging vs trending.</li>
-        <li><strong>High WR tapi avg_loss besar:</strong> PF=0.72 berarti meski menang 61% trade, total keuntungan winners &lt; total kerugian losers.</li>
-      </ul>
-    </div>
-  </div>
+| DD Level | Position Size | Status |
+|----------|---------------|--------|
+| 0 – 5% | 100% normal | Full trading |
+| 5 – 10% | 75% | Slight reduction |
+| 10 – 15% | 50% | Moderate caution |
+| 15 – 20% | 25% | Heavy caution |
+| > 25% | 0% (STOP) | Circuit breaker |
 
-  <div class="warn-box" style="margin-top:12px">
-    <strong>Rekomendasi Fix untuk 2023-type Market:</strong>
-    <ol style="margin-top:8px;padding-left:20px">
-      <li>Tambah <strong>ADX filter</strong>: skip trading jika ADX &lt; 20 (non-trending regime)</li>
-      <li>Tambah <strong>Circuit Breaker</strong>: pause 72 jam setelah 3 consecutive losses</li>
-      <li>Tightkan <strong>trailing stop</strong> lebih agresif di NEUTRAL bias (trail 1.0×ATR instead of 1.5×)</li>
-      <li>Reduce <strong>max_risk</strong> ke 1.5% di NEUTRAL/BEAR market (dari 3%)</li>
-    </ol>
-  </div>
-</div>
+### Risk Limits Per Trade
 
-<!-- ════════════════════════════════════════════════════════ 12. FILE STRUCTURE -->
-<div class="section">
-  <div class="section-title"><div class="num">12</div> Struktur File &amp; Output</div>
+| Parameter | v1 | v2 |
+|-----------|-----|-----|
+| Max Risk/Trade | 2% | 3% (↑) |
+| Max Total DD | 15% | 20% (↑) |
+| Max Daily Loss | 5% | 5% |
+| Max Concurrent | 3 | 3 |
+| Min RR Ratio | 1.5× | 1.5× |
+| Min Confidence | 0.60 | 0.70 (↑) |
+| Slippage | 0.05% | 0.05% |
+| Taker Fee | 0.04% | 0.04% |
 
-  <div class="flowchart" style="font-size:12px">
+---
+
+## 11. Diagnosis: 2023 Anomaly (−21% Return, DD 39.5%)
+
+Year 2023 is an outlier that draws attention — despite **win rate 60.9%** (second highest after 2024), the system experienced −21.07% loss with 39.5% drawdown. Here's the analysis:
+
+### 2023 Data: 23 Trades, WR 60.9%
+
+| Exit Type | Count | % |
+|-----------|-------|---|
+| TRAIL_STOP | 16 | 69.6% |
+| STOP_LOSS | 5 | 21.7% |
+| TP3 | 2 | 8.7% |
+
+Avg Win R: 1.70R | Avg Loss R: 0.57R | PF: 0.72
+
+**Paradox:** WR 60.9% but PF 0.72 (losing more money). This happened because losses were larger in dollar terms despite smaller R — capital was larger in 2023 ($9,566 after 2022 boom) so even small percentage losses = large dollar amounts.
+
+### Root Cause Analysis
+
+- **Market Whipsaw:** BTC in 2023 experienced several large false breakouts before the end-of-year rally. System entered SHORT during early-year recovery, then got caught in reversal.
+- **Large Capital Effect:** After 2022 large gain ($1,875 → $9,566), capital was 5× larger. Same percentage loss = 5× larger dollar loss.
+- **Sideways Market:** Q1-Q2 2023 was very choppy. TrendAware engine struggled to differentiate ranging vs trending.
+- **High WR but large avg_loss:** PF=0.72 means although winning 61% of trades, total winner profits < total loser losses.
+
+### Recommended Fixes for 2023-type Market
+
+1. Add **ADX filter**: skip trading if ADX < 20 (non-trending regime)
+2. Add **Circuit Breaker**: pause 72 hours after 3 consecutive losses
+3. Tighten **trailing stop** more aggressively in NEUTRAL bias (trail 1.0×ATR instead of 1.5×)
+4. Reduce **max_risk** to 1.5% in NEUTRAL/BEAR market (from 3%)
+
+---
+
+## 12. File Structure & Output
+
+```
 btc_quant_system/
 ├── engines/                          # Core Trading Engines
 │   ├── data_pipeline.py              # Data loading, resample, cache
@@ -1231,90 +467,70 @@ btc_quant_system/
 ├── run_leveraged_backtest.py         # [v2] 10x leverage backtest
 ├── run_full_backtest.py              # v1 OOS 2023-2024 backtest
 ├── run_yearly_backtest.py            # v1 yearly runner
-├── PROJECT_REPORT v1.html           # v1 comprehensive report
-├── PROJECT_REPORT v2.html           # [v2] This document
+├── PROJECT_REPORT v1.html            # v1 comprehensive report
+├── PROJECT_REPORT v2.html            # [v2] This document
 └── configs/
     ├── trading_config.yaml
     └── risk_config.yaml
-  </div>
-</div>
+```
 
-<!-- ════════════════════════════════════════════════════════ 13. NEXT STEPS -->
-<div class="section">
-  <div class="section-title"><div class="num num-green">13</div> Roadmap &amp; Next Steps — v3</div>
+---
 
-  <div class="two-col">
-    <div class="card">
-      <h3>Priority 1 — Fix 2023 Anomaly (Max DD)</h3>
-      <ul>
-        <li>Implement <strong>ADX/Choppiness Index</strong> filter: no new trades jika pasar ranging</li>
-        <li>Add <strong>Monthly Circuit Breaker</strong>: stop trading setelah −15% dalam satu bulan</li>
-        <li>Tightkan trailing stop di <code>NEUTRAL</code> bias: 1.0×ATR trail (dari 1.5×)</li>
-        <li>Dynamic <code>max_risk</code>: 1.5% di NEUTRAL, 3% di STRONG_BULL/BEAR, 2% di BULL/BEAR</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Priority 2 — Sharpe Ratio</h3>
-      <ul>
-        <li>Improve return <strong>consistency</strong> across years (reduce inter-year variance)</li>
-        <li>Add <strong>regime-based position scaling</strong>: max 3× position in STRONG trend</li>
-        <li>Filter out low-Sharpe months via rolling Sharpe monitor</li>
-        <li>Consider <strong>fixed-fraction sizing</strong> in NEUTRAL market (reduce variance)</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Priority 3 — Avg Win R</h3>
-      <ul>
-        <li>Widen TP3 to <strong>8×ATR in all trending markets</strong> (not just STRONG_BULL)</li>
-        <li>Reduce partial at TP1 from 40% to 30% — let more run</li>
-        <li>Add <strong>momentum continuation check</strong> before closing at TP1</li>
-        <li>Consider <strong>scaling in</strong> at partial exits instead of scaling out</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Priority 4 — ML Integration v3</h3>
-      <ul>
-        <li>Use ML probability as <strong>confidence multiplier</strong> (not just filter)</li>
-        <li>Train separate models per <strong>market regime</strong> (bull/bear models)</li>
-        <li>Add <strong>feature importance</strong> for regime classification</li>
-        <li>Implement <strong>online learning</strong>: retrain monthly on recent data</li>
-      </ul>
-    </div>
-  </div>
+## 13. Roadmap & Next Steps — v3
 
-  <div class="success-box" style="margin-top:8px">
-    <strong>Kesimpulan v2:</strong> Sistem v2 berhasil menyelesaikan masalah utama v1 (win rate rendah 30%, SL exit 89%). Win rate naik ke 61.3% dan SL exit turun ke 22.5% — ini adalah validasi bahwa TrendAwareSignalEngine + HighSelectivity + partial exits + tiered trailing stop adalah arsitektur yang benar. Tantangan berikutnya adalah mengurangi variance antar tahun (khususnya 2023) dan meningkatkan Sharpe ratio.
-  </div>
+### Priority 1 — Fix 2023 Anomaly (Max DD)
 
-  <div class="warn-box">
-    <strong>Catatan Live Trading:</strong> Semua angka adalah hasil backtest historis. Untuk deployment live:
-    <ul style="margin-top:6px">
-      <li>Gunakan leverage maksimal <strong>3×</strong> (bukan 10×) untuk menghindari liquidasi di kondisi volatile</li>
-      <li>Paper trade selama 3–6 bulan sebelum menggunakan modal nyata</li>
-      <li>Walk-forward consistency score 0.455 mengindikasikan sistem memerlukan adaptasi berkala</li>
-      <li>Slippage nyata bisa 2–5× lebih tinggi dari simulasi, terutama saat kondisi krisis</li>
-    </ul>
-  </div>
-</div>
+- Implement **ADX/Choppiness Index** filter: no new trades if market is ranging
+- Add **Monthly Circuit Breaker**: stop trading after −15% in one month
+- Tighten trailing stop in `NEUTRAL` bias: 1.0×ATR trail (from 1.5×)
+- Dynamic `max_risk`: 1.5% in NEUTRAL, 3% in STRONG_BULL/BEAR, 2% in BULL/BEAR
 
-<!-- ════════════════════════════════════════════════════════ FOOTER -->
-<div class="footer">
-  <p>
-    <strong>BTC Quant Trading System v2.0</strong> &nbsp;·&nbsp;
-    Built with Python (pandas, numpy, scikit-learn, hmmlearn, optuna) &nbsp;·&nbsp;
-    Data: BTC/USDT 1-min OHLCV 2017–2024 &nbsp;·&nbsp;
-    Backtest: 2019–2024 (6 years, no look-ahead bias)
-  </p>
-  <p style="margin-top:6px">
-    <span class="muted">Generated: March 2026 &nbsp;|&nbsp; Engines: 14 modules &nbsp;|&nbsp; Total trades: 142 (1×) + 151 (10×)</span>
-  </p>
-  <p style="margin-top:8px;font-size:11px;color:#555">
-    ⚠ Disclaimer: Dokumen ini adalah hasil riset dan simulasi historis, bukan saran investasi.
-    Past performance does not guarantee future results. Trading cryptocurrency mengandung risiko
-    tinggi termasuk kemungkinan kehilangan seluruh modal.
-  </p>
-</div>
+### Priority 2 — Sharpe Ratio
 
-</div><!-- /page -->
-</body>
-</html>
+- Improve return **consistency** across years (reduce inter-year variance)
+- Add **regime-based position scaling**: max 3× position in STRONG trend
+- Filter out low-Sharpe months via rolling Sharpe monitor
+- Consider **fixed-fraction sizing** in NEUTRAL market (reduce variance)
+
+### Priority 3 — Avg Win R
+
+- Widen TP3 to **8×ATR in all trending markets** (not just STRONG_BULL)
+- Reduce partial at TP1 from 40% to 30% — let more run
+- Add **momentum continuation check** before closing at TP1
+- Consider **scaling in** at partial exits instead of scaling out
+
+### Priority 4 — ML Integration v3
+
+- Use ML probability as **confidence multiplier** (not just filter)
+- Train separate models per **market regime** (bull/bear models)
+- Add **feature importance** for regime classification
+- Implement **online learning**: retrain monthly on recent data
+
+### v2 Conclusion
+
+The v2 system successfully solved the main v1 problems (low win rate 30%, SL exit 89%). Win rate increased to 61.3% and SL exit dropped to 22.5% — this validates that TrendAwareSignalEngine + HighSelectivity + partial exits + tiered trailing stop is the correct architecture. The next challenge is reducing inter-year variance (especially 2023) and improving Sharpe ratio.
+
+### Live Trading Notes
+
+All figures are historical backtest results. For live deployment:
+
+- Use maximum leverage **3×** (not 10×) to avoid liquidation in volatile conditions
+- Paper trade for 3–6 months before using real capital
+- Walk-forward consistency score 0.455 indicates the system requires periodic adaptation
+- Real slippage can be 2–5× higher than simulation, especially during crisis conditions
+
+---
+
+## Disclaimer
+
+**BTC Quant Trading System v2.0**
+
+Built with Python (pandas, numpy, scikit-learn, hmmlearn, optuna)
+
+Data: BTC/USDT 1-min OHLCV 2017–2024
+
+Backtest: 2019–2024 (6 years, no look-ahead bias)
+
+Generated: March 2026 | Engines: 14 modules | Total trades: 142 (1×) + 151 (10×)
+
+⚠ **Disclaimer:** This document is the result of research and historical simulation, not investment advice. Past performance does not guarantee future results. Trading cryptocurrency carries high risk including the possibility of losing all capital.
