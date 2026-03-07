@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-text-primary antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-surface;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-border-light;
+  }
+}
+
+@layer components {
+  /* Card styles */
+  .card {
+    @apply bg-surface border border-border rounded-xl p-4;
+    @apply transition-all duration-200;
+  }
+  
+  .card-hover {
+    @apply card hover:border-border-light hover:shadow-glow-blue;
+  }
+  
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-status-success/10 text-status-success border border-status-success/20;
+  }
+  
+  .badge-danger {
+    @apply bg-status-danger/10 text-status-danger border border-status-danger/20;
+  }
+  
+  .badge-warning {
+    @apply bg-status-warning/10 text-status-warning border border-status-warning/20;
+  }
+  
+  .badge-info {
+    @apply bg-status-info/10 text-status-info border border-status-info/20;
+  }
+  
+  /* Button styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium;
+    @apply transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-primary {
+    @apply btn bg-gradient-primary text-white hover:opacity-90;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-surface-elevated border border-border text-text-primary hover:bg-surface-hover;
+  }
+  
+  /* Table styles */
+  .table-row {
+    @apply border-b border-border/50 hover:bg-surface-hover transition-colors;
+  }
+  
+  /* Signal colors */
+  .signal-strong-long {
+    @apply text-signal-strong-long;
+  }
+  
+  .signal-long {
+    @apply text-signal-long;
+  }
+  
+  .signal-skip {
+    @apply text-signal-skip;
+  }
+  
+  .signal-short {
+    @apply text-signal-short;
+  }
+  
+  .signal-strong-short {
+    @apply text-signal-strong-short;
+  }
+  
+  /* Glow effects */
+  .glow-green {
+    @apply shadow-glow-green;
+  }
+  
+  .glow-red {
+    @apply shadow-glow-red;
+  }
+  
+  .glow-blue {
+    @apply shadow-glow-blue;
+  }
+}
+
+@layer utilities {
+  /* Number formatting */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-primary bg-clip-text text-transparent;
+  }
+  
+  /* Animate on data change */
+  .animate-flash {
+    animation: flash 0.5s ease-out;
+  }
+  
+  @keyframes flash {
+    0% { background-color: rgba(59, 130, 246, 0.3); }
+    100% { background-color: transparent; }
+  }
+}

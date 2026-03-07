@@ -69,3 +69,16 @@ backtests/results/*.json
 
 # Reports (optional - uncomment if too large)
 # backtests/reports/charts/*.png
+
+# Next.js / Node
+node_modules/
+.next/
+out/
+build/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
